@@ -1,0 +1,1 @@
+{"name":"Local: bfrog","url":"c:\\Users\\91799\\Desktop\\c++ Programming\\bfrog.cpp","tests":[{"id":1723148703866,"input":"10 4\n40 10 20 70 80 10 20 70 80 60","output":"40"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\91799\\Desktop\\c++ Programming\\bfrog.cpp","group":"local","local":true}
