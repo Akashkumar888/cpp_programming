@@ -1,0 +1,1 @@
+{"name":"Local: 5","url":"c:\\Users\\91799\\Desktop\\stl_cpp\\5.cpp","tests":[{"id":1693395806822,"input":"6\n2 3 17\n3 2 8\n4 2 5\n9 21 56\n4 9 14\n23 43 231","output":"4 9\n7 0\n0 1\n1 21\n8 9\n23 43"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\91799\\Desktop\\stl_cpp\\5.cpp","group":"local","local":true}

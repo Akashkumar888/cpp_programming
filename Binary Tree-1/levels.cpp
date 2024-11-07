@@ -55,6 +55,7 @@ int main(){
     i->left=j;
     display(a);
     cout<<endl;
+    // height=level-1;
     cout<<Treelevel(a)<<endl;
     cout<<Treeheight(a)-1<<endl;
     return 0;
