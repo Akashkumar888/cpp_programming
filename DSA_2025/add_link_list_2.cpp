@@ -1,66 +1,81 @@
-
 #include <iostream>
+#include<vector>
 using namespace std;
 
-// Definition of a linked list node
-struct Node {
+// Definition for singly-linked list node
+class Node {
+public:
     int data;
     Node* next;
-    Node(int val) : data(val), next(nullptr) {}
+    Node(int val) : data(val), next(NULL) {}
 };
 
-// Function to reverse a linked list
-Node* reverse(Node* head) {
-    Node* prev = nullptr;
-    Node* curr = head;
-    while (curr) {
-        Node* nextNode = curr->next;
-        curr->next = prev;
-        prev = curr;
-        curr = nextNode;
+class Solution {
+public:
+    Node* reverse(Node* head) {
+        Node* prev = NULL;
+        Node* curr = head;
+        Node* nextNode = NULL;
+        while (curr) {
+            nextNode = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = nextNode;
+        }
+        return prev;
     }
-    return prev;
-}
 
-// Function to add two linked lists
-Node* addTwoLists(Node* num1, Node* num2) {
-    Node* head1 = reverse(num1);
-    Node* head2 = reverse(num2);
-    Node* dummy = new Node(-1); // Dummy node for the result list
-    Node* current = dummy;
-    int carry = 0;
+    Node* addTwoLists(Node* num1, Node* num2) {
+        // Reverse both input lists
+        Node* head1 = reverse(num1);
+        Node* head2 = reverse(num2);
 
-    while (head1 || head2 || carry) {
-        int sum = carry;
-        if (head1) {
-            sum += head1->data;
-            head1 = head1->next;
+        int carry = 0;
+        Node* dummy = new Node(-1); // Dummy node
+        Node* newHead = dummy;
+
+        // Add corresponding digits of the two lists
+        while (head1 || head2 || carry) {
+            int sum = carry;
+            if (head1) {
+                sum += head1->data;
+                head1 = head1->next;
+            }
+            if (head2) {
+                sum += head2->data;
+                head2 = head2->next;
+            }
+
+            // Create a new node with the current digit
+            newHead->next = new Node(sum % 10);
+            newHead = newHead->next;
+            carry = sum / 10;
         }
-        if (head2) {
-            sum += head2->data;
-            head2 = head2->next;
+
+        // Reverse the result list and remove leading zeros
+        Node* oldHead = reverse(dummy->next);
+        delete dummy; // Clean up the dummy node
+        while (oldHead->data == 0 && oldHead->next) {
+            oldHead = oldHead->next;
         }
-        current->next = new Node(sum % 10); // Add a new node with the digit
-        carry = sum / 10;                   // Update the carry
+        return oldHead;
+    }
+};
+
+// Utility function to create a linked list from a vector of integers
+Node* createLinkedList(const vector<int>& nums) {
+    if (nums.empty()) return NULL;
+    Node* head = new Node(nums[0]);
+    Node* current = head;
+    for (size_t i = 1; i < nums.size(); ++i) {
+        current->next = new Node(nums[i]);
         current = current->next;
-    }
-
-    return reverse(dummy->next); // Reverse the result list before returning
-}
-
-// Function to create a linked list from an array
-Node* createList(const int arr[], int size) {
-    Node* head = new Node(arr[0]);
-    Node* tail = head;
-    for (int i = 1; i < size; i++) {
-        tail->next = new Node(arr[i]);
-        tail = tail->next;
     }
     return head;
 }
 
-// Function to print a linked list
-void printList(Node* head) {
+// Utility function to print a linked list
+void printLinkedList(Node* head) {
     while (head) {
         cout << head->data;
         if (head->next) cout << " -> ";
@@ -69,27 +84,29 @@ void printList(Node* head) {
     cout << endl;
 }
 
-// Main function to test the implementation
+// Driver code
 int main() {
-    // Example Input: Two linked lists with 6 digits each
-    const int arr1[] = {9, 9, 9, 9, 9, 9};
-    const int arr2[] = {1};
+    // Example input lists
+    vector<int> list1 = {2, 4, 3}; // Represents 342
+    vector<int> list2 = {5, 6, 4}; // Represents 465
 
-    // Creating linked lists from arrays
-    Node* num1 = createList(arr1, sizeof(arr1) / sizeof(arr1[0]));
-    Node* num2 = createList(arr2, sizeof(arr2) / sizeof(arr2[0]));
+    // Create linked lists from input vectors
+    Node* num1 = createLinkedList(list1);
+    Node* num2 = createLinkedList(list2);
 
-    cout << "First List: ";
-    printList(num1);
+    cout << "Input List 1: ";
+    printLinkedList(num1);
 
-    cout << "Second List: ";
-    printList(num2);
+    cout << "Input List 2: ";
+    printLinkedList(num2);
 
-    // Adding the two linked lists
-    Node* result = addTwoLists(num1, num2);
+    // Add the two lists
+    Solution solution;
+    Node* result = solution.addTwoLists(num1, num2);
 
-    cout << "Result List: ";
-    printList(result);
+    // Print the result
+    cout << "Resultant List: ";
+    printLinkedList(result);
 
     return 0;
 }
