@@ -48,3 +48,4 @@ vector<int> maxOfMins(vector<int>& arr) {
 
   return ans;
 }
+
