@@ -13,3 +13,4 @@ int longestPalinSubseq(string &s) {
   vector<vector<int>> dp(n + 1, vector<int>(n + 1, -1));
   return lis(n - 1, n - 1, s, s2, dp);
 }
+
