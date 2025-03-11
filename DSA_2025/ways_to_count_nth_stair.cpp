@@ -21,3 +21,4 @@ int main() {
     cout << "Ways to reach step " << n << ": " << countWays(n) << endl;
     return 0;
 }
+
