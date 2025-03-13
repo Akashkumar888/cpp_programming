@@ -6,7 +6,7 @@ class Solution {
   
           int maxi = 0;
           if (wt[i] <= W)maxi = max(maxi, val[i] + solve(i + 1, n, val, wt, W - wt[i],dp));
-          
+
           maxi = max(maxi, solve(i + 1, n, val, wt, W, dp));
   
           return dp[i][W] = maxi;
@@ -18,4 +18,5 @@ class Solution {
           return solve(0, n, val, wt, W, dp);
       }
   };
+  
   
