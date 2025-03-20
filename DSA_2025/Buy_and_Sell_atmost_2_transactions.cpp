@@ -26,3 +26,4 @@ int maxProfit(vector<int>& prices) {
   vector<vector<vector<int>>> dp(n + 1, vector<vector<int>>(2, vector<int>(3, -1)));
   return solve(0, n, prices, buy, 2, dp);  // Max 2 transactions allowed
 }
+
