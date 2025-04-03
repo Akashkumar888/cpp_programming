@@ -1,16 +1,16 @@
-
 #include <bits/stdc++.h>
 using namespace std;
 
 vector<vector<int>> directions = {{1, 0}, {0, 1}, {0, -1}, {-1, 0}};
-typedef pair<int, pair<int, int>> P; // {time, {row, col}}
+typedef pair<int, pair<int, int>> P;
 
 int orangesRotting(vector<vector<int>>& mat) {
-    int n = mat.size(), m = mat[0].size();
-    vector<vector<bool>> visited(n, vector<bool>(m, false)); // Fixed bool vector
+    int n = mat.size();
+    int m = mat[0].size();
+    vector<vector<bool>> visited(n, vector<bool>(m, false));
     queue<P> q;
 
-    // Push all initially rotten oranges into queue
+    // Enqueue all initially rotten oranges
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < m; j++) {
             if (mat[i][j] == 2) {
@@ -21,44 +21,30 @@ int orangesRotting(vector<vector<int>>& mat) {
     }
 
     int time = 0;
-    
-    // BFS traversal
     while (!q.empty()) {
-        auto [tm, cell] = q.front();
+        int tm = q.front().first;
+        int i = q.front().second.first;
+        int j = q.front().second.second;
         q.pop();
-        int i = cell.first, j = cell.second;
-        time = max(time, tm);
+        time = max(tm, time);
 
-        for (auto& dir : directions) {
+        for (auto &dir : directions) {
             int new_i = i + dir[0];
             int new_j = j + dir[1];
 
-            if (new_i >= 0 && new_i < n && new_j >= 0 && new_j < m &&
+            if (new_i >= 0 && new_i < n && new_j >= 0 && new_j < m && 
                 !visited[new_i][new_j] && mat[new_i][new_j] == 1) {
                 q.push({tm + 1, {new_i, new_j}});
                 visited[new_i][new_j] = true;
-                mat[new_i][new_j] = 2; // Mark as rotten
             }
         }
     }
 
-    // Check if any fresh orange remains
+    // Check if any fresh orange is left
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < m; j++) {
-            if (mat[i][j] == 1) return -1; // If fresh orange remains
+            if (mat[i][j] == 1 && !visited[i][j]) return -1;
         }
     }
-
     return time;
-}
-
-int main() {
-    vector<vector<int>> grid = {
-        {2, 1, 1},
-        {1, 1, 0},
-        {0, 1, 1}
-    };
-
-    cout << "Minimum time to rot all oranges: " << orangesRotting(grid) << endl;
-    return 0;
 }
