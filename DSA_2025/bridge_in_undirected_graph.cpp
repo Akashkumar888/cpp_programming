@@ -51,3 +51,33 @@ class DSU {
         }
     };
       
+
+
+
+
+    //Approach -ii 
+
+    void dfs(int u,unordered_map<int,vector<int>>&adj,vector<bool>&visited,int c,int d){
+        visited[u]=true;
+        for(auto &ngbr:adj[u]){
+            if(!visited[ngbr] && !(u==c && ngbr==d)){
+                dfs(ngbr,adj,visited,c,d);
+            }
+        }
+    }
+      bool isBridge(int V, vector<vector<int>> &edges, int c, int d) {
+          // Code here
+          unordered_map<int,vector<int>>adj;
+          for(auto &edge:edges){
+             int u=edge[0];
+             int v=edge[1];
+             adj[u].push_back(v);
+             adj[v].push_back(u);
+          }
+          vector<bool>visited(V,false);
+          dfs(c,adj,visited,c,d);
+          if(visited[d]==true)return false;
+          return true;
+      }
+
+      
