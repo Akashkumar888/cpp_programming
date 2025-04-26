@@ -18,6 +18,15 @@ string multiplyStrings(string& s1, string& s2) {
     while (s1.length() > 1 && s1[0] == '0') s1.erase(0,1);
     while (s2.length() > 1 && s2[0] == '0') s2.erase(0,1);
 
+
+    // ✅ If your string starts with one or more '0' characters (example: "00023"),
+    // ✅ It deletes the '0' from the beginning one-by-one, until:
+    
+    // Either the first character is not '0' anymore, or
+    
+    // Only one character is left (so we don't erase the full number accidentally).
+
+
     if (s1 == "0" || s2 == "0") return "0";
 
     int n = s1.size(), m = s2.size();
@@ -39,10 +48,12 @@ string multiplyStrings(string& s1, string& s2) {
     int i = 0;
     while (i < result.size() && result[i] == 0) i++; // skip leading zeros
 
-    for (; i < result.size(); i++) {
+    while (i< result.size()) {
         ans += (result[i] + '0');
+        i++;
     }
 
     if (isNegative) ans = "-" + ans;
     return ans;
 }
+
