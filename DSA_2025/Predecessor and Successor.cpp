@@ -41,12 +41,12 @@ class Solution {
   void func2(Node*root,int key,Node* &successor){
       if(root==NULL)return;
       while(root){
-          if(root->data <= key){
-              root=root->right;
-          }
-          else{
+          if(root->data > key){
               successor=root;
               root=root->left;
+          }
+          else{
+              root=root->right;
           }
       }
   }
@@ -59,5 +59,6 @@ class Solution {
         return {predecessor,successor};
     }
   };
+
 
   
