@@ -1,4 +1,5 @@
 
+
 class Solution {
   public:
     int majorityElement(vector<int>& arr) {
@@ -22,3 +23,4 @@ class Solution {
         return -1;
     }
   };
+  
