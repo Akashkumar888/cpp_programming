@@ -1,4 +1,3 @@
-
 class Solution {
   public:
   bool isPalindrome(int i,int j,string &s){
@@ -8,15 +7,15 @@ class Solution {
       }
       return true;
   }
-  void solve(int idx,int n,string &s,vector<string>&ans,vector<vector<string>>&result){
-      if(idx>=n){
+  void solve(int i,int n,string &s,vector<string>&ans,vector<vector<string>>&result){
+      if(i>=n){
           result.push_back(ans);
           return;
       }
-      // backtrack by using for loop 
-      for(int j=idx;j<n;j++){
-          if(isPalindrome(idx,j,s)){
-          ans.push_back(s.substr(idx,j-idx+1));
+      for(int j=i;j<n;j++){
+          if(isPalindrome(i,j,s)){
+              // for length j-i+1 use here 
+          ans.push_back(s.substr(i,j-i+1));
           solve(j+1,n,s,ans,result);
           ans.pop_back();
           }
