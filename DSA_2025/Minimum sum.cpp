@@ -12,8 +12,13 @@ class Solution {
         }
         reverse(result.begin(),result.end());
         // Remove leading zeros
+        // Why while? Because there could be multiple leading zeroes, like "000123" → "123"
+        // result.erase(0,1) removes 1 character at index 0.
         while(!result.empty()&&result[0]=='0')result.erase(0,1);
+
         if(result.empty())result="0";
+        // After removing all leading zeros, if result becomes empty (like "000" becomes ""), you must set it to "0".
+        // Why? Because an empty string is not a valid number — we return "0" instead.
         return result;
     }
     string minSum(vector<int> &arr) {
