@@ -12,7 +12,6 @@ class Solution {
             carry = sum / 10;
         }
         reverse(result.begin(),result.end());
-        // while(!result.empty() && result[0]=='0')result.substr(0,1);
         // Remove leading zeros
         while (!result.empty() && result[0] == '0')result.erase(0,1);
         if(result.empty()) result = "0";
