@@ -10,7 +10,6 @@
 // This is a well-known problem. The count of such strings follows the Fibonacci sequence:
 // Valid(n) = Fib(n+2)
 // Where:
-
 // Fib(0) = 0
 // Fib(1) = 1
 // Fib(2) = 1
@@ -67,4 +66,6 @@ class Solution {
 
 // 🧠 Space Complexity: O(1)
 // Only three integer variables used (first, second, sum).
+
+
 
