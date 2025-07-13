@@ -127,6 +127,40 @@ class Solution {
 
 
 
+
+
+class Solution {
+  public:
+    int nonLisMaxSum(vector<int>& arr) {
+        int n = arr.size();
+        int totalSum = accumulate(arr.begin(), arr.end(), 0);
+        vector<int> dp(n, 1);           // length of LIS ending at i
+        vector<int> lisSum(n);       // sum of LIS ending at i
+        for (int i = 0; i < n; i++) lisSum[i] = arr[i];  // initialize with current element
+
+        int lis = 1;
+        int minSum =INT_MAX;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < i; j++) {
+                if (arr[j] < arr[i]) {
+                    // if longer LIS found or same length with smaller sum
+                    if (dp[j] + 1 >= dp[i]) {
+                        dp[i] = dp[j] + 1;
+                        lisSum[i] = lisSum[j] + arr[i];
+                    }
+                }
+            }
+            // check if this is the new best LIS
+            if (dp[i] > lis || (dp[i]==lis && lisSum[i]<minSum) ) {
+                lis = dp[i];
+                minSum=lisSum[i];
+            }
+        }
+        return totalSum - minSum;
+    }
+};
+
+
 // 🔹 Time Complexity: O(n^2)
 // You have a double loop:
 // So the time complexity is O(n²) where n is the size of the array.
