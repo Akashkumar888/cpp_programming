@@ -5,6 +5,42 @@ class Solution {
     vector<int> largestSubset(vector<int>& arr) {
         // Code here
         int n=arr.size();
+        sort(arr.begin(),arr.end(),greater<int>());
+        // 🔥 Choose lexicographically greatest in case of equal length
+        // one that is lexicographically greatest, after sorting the subset in ascending order.
+        int lis=1;
+        int last_idx=0;
+        vector<int>dp(n,1);
+        vector<int>prevIdx(n,-1); // for store idx of element 
+       for(int i=0;i<n;i++){
+           for(int j=0;j<i;j++){
+               if((arr[j]%arr[i]==0) && dp[j]+1>dp[i]){
+                   dp[i]=dp[j]+1;
+                   prevIdx[i]=j;
+               }
+           }
+            if (dp[i] > lis ) {
+                lis = dp[i];
+                last_idx = i;
+            }
+       }
+       vector<int>ans;
+       while(last_idx!=-1){
+           ans.push_back(arr[last_idx]);
+           last_idx=prevIdx[last_idx];
+       }
+        return ans;
+    }
+};
+
+
+
+
+class Solution {
+  public:
+    vector<int> largestSubset(vector<int>& arr) {
+        // Code here
+        int n=arr.size();
         sort(arr.begin(),arr.end());
         int maxi=1;
         int last_idx=0;
@@ -75,6 +111,8 @@ class Solution {
 
 
 
+
+
 // print lis 
 
 class Solution {
@@ -107,8 +145,7 @@ public:
             last_idx = hash[last_idx];
             ans.push_back(arr[last_idx]);
         }
-
-        reverse(ans.begin(), ans.end());
+        reverse(ans.begin(), ans.end()); 
         return ans;
     }
 };
