@@ -39,3 +39,9 @@ bool divisibleBy(string &s, int divisor) {
     return rem == 0;
 }
 
+// ✅ Perfect for checking if a huge number (in string) is divisible by an integer.
+// ✅ Works for divisors up to INT_MAX.
+// ✅ Prevents overflow.
+// 🚀 Time Complexity: O(n) where n is the number of digits in the string.
+
+
