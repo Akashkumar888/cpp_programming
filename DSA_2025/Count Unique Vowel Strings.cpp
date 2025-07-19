@@ -1,4 +1,5 @@
 
+
 class Solution {
   public:
   bool isVowel(char &ch){
@@ -15,16 +16,17 @@ class Solution {
             }
         }
         int k=0;
-        if(mp.size()==1)k=1;
-        if(mp.size()==2)k=2;
-        if(mp.size()==3)k=6;
-        if(mp.size()==4)k=24;
-        if(mp.size()==5)k=120;
         for(auto &it:mp){
             int freq=it.second;
+            k++;
             cnt*=(freq);
         }
-        return cnt*k;
+        if(k==0)return 0;
+        int fact=1;
+        for (int i=2;i<=k;i++) {
+            fact *= i;
+        }
+        return cnt*fact;
     }
 };
 
