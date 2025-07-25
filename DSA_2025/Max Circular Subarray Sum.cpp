@@ -31,7 +31,13 @@ class Solution {
         int maxSum=maxPositiveSum(arr);
         int minSum=maxNegativeSum(arr);
         // If all elements are negative, return the maximum element
+        // But if all elements are negative, totalSum == minSum, so totalSum - minSum == 0.
+       // In this case, return the maximum element (which is maxSum from Kadane).
         if(totalSum==minSum)return maxSum;
+
+        // If all elements are negative, return max element (Kadane's result)
+        // if(maxSum < 0) return maxSum;
+
         return max(maxSum,totalSum - minSum ); 
     }
 };
