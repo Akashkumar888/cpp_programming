@@ -94,3 +94,33 @@ public:
 
 
 
+class Solution {
+public:
+    int balanceSums(vector<vector<int>>& mat) {
+        int n = mat.size();
+        int maxRowSum = 0, maxColSum = 0, totalMatSum = 0;
+
+        for (int i = 0; i < n; ++i) {
+            int rowSum = 0, colSum = 0;
+            for (int j = 0; j < n; ++j) {
+                rowSum += mat[i][j];
+                colSum += mat[j][i];
+                totalMatSum += mat[i][j];
+            }
+            maxRowSum = max(maxRowSum, rowSum);
+            maxColSum = max(maxColSum, colSum);
+        }
+        // To make the matrix "beautiful", you must equalize all rows and columns to the same sum.
+        // The maximum among all row and column sums becomes the target that each row and column should reach.
+        // If all n rows (and n columns) must sum to targetSum, and each row must have that sum, the total sum of the entire matrix should become:
+        // targetSum + targetSum + ... (n times) = n * targetSum
+
+        int targetSum  = max(maxRowSum, maxColSum);
+        // This represents the extra sum needed to make all rows and columns equal to targetSum.
+        return n * targetSum  - totalMatSum;
+    }
+};
+
+
+
+
