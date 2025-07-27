@@ -81,10 +81,16 @@ public:
             }
             maxColSum = max(maxColSum, colSum);
         }
-        
+        // To make the matrix "beautiful", you must equalize all rows and columns to the same sum.
+        // The maximum among all row and column sums becomes the target that each row and column should reach.
+        // If all n rows (and n columns) must sum to targetSum, and each row must have that sum, the total sum of the entire matrix should become:
+        // targetSum + targetSum + ... (n times) = n * targetSum
+
         int targetSum  = max(maxRowSum, maxColSum);
+        // This represents the extra sum needed to make all rows and columns equal to targetSum.
         return n * targetSum  - totalMatSum;
     }
 };
+
 
 
