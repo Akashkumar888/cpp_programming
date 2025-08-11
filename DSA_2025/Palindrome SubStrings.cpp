@@ -82,3 +82,27 @@ public:
 
 // Space: O(1) — only variables for counting, no big DP table.
 
+class Solution {
+public:
+int expandFromCenter(string &s, int left, int right) {
+        int count = 0;
+        while (left >= 0 && right < s.length() && s[left] == s[right]) {
+            if (right - left + 1 >= 2) count++;
+            left--;
+            right++;
+        }
+        return count;
+    }
+    int countPS(string &s) {
+        // Expand Around Center Technique
+        int n = s.length();
+        int count = 0;
+        for (int center = 0; center < n; center++) {
+         
+            count += expandFromCenter(s, center, center);
+            count += expandFromCenter(s, center, center + 1);
+        }
+        return count;
+    }
+};
+
