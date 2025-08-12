@@ -1,4 +1,5 @@
 
+
 class Solution {
   public:
     vector<int> minMaxCandy(vector<int>& prices, int k) {
@@ -25,3 +26,4 @@ class Solution {
 // The algorithm sorts prices in-place → O(1) extra space (not counting input storage).
 // Only a few integer variables are used → constant space.
 // ✅ Space Complexity: O(1)
+
