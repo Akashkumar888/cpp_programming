@@ -32,14 +32,12 @@ class Solution {
 
 // Step 1 — Insert "30" into sorted ["3"]
 // Compare comp("30","3") → "303" vs "330" → false → "30" goes after "3" (no change)
-
 // Sorted: ["3","30"]
 // Full: ["3","30","34","5","9"]
 
 // Step 2 — Insert "34" into sorted ["3","30"]
 // Compare comp("34","30") → "3430" vs "3034" → true → "34" should come before "30"
 // Now compare comp("34","3") → "343" vs "334" → true → "34" should come before "3"
-
 // After inserting "34" in correct place:
 // Sorted: ["34","3","30"]
 // Full: ["34","3","30","5","9"]
@@ -48,7 +46,6 @@ class Solution {
 // Compare comp("5","30") → "530" vs "305" → true → move before "30"
 // Compare comp("5","3") → "53" vs "35" → true → move before "3"
 // Compare comp("5","34") → "534" vs "345" → true → move before "34"
-
 // After inserting "5":
 // Sorted: ["5","34","3","30"]
 // Full: ["5","34","3","30","9"]
