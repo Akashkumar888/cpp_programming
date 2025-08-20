@@ -1,5 +1,4 @@
-
- int pivotIndex(int l,int r,int n,vector<vector<int>>&mat){
+int partition(int l,int r,int n,vector<vector<int>>&mat){
       while(l<r){
           int mid=l+(r-l)/2;
           int row=mid/n;
@@ -11,5 +10,4 @@
       }
       return r;
   }
-
   

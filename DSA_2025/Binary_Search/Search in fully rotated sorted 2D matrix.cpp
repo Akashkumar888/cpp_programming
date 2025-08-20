@@ -1,7 +1,7 @@
 
 class Solution {
   public:
-  int pivotIndex(int l,int r,int n,vector<vector<int>>&mat){
+  int partition(int l,int r,int n,vector<vector<int>>&mat){
       while(l<r){
           int mid=l+(r-l)/2;
           int row=mid/n;
@@ -29,11 +29,12 @@ class Solution {
         int m=mat.size();
         int n=mat[0].size();
         int l=0,r=m*n-1;
-        int pivotIdx=pivotIndex(l,r,n,mat);
+        int pivotIdx=partition(l,r,n,mat);
         if(binarySearch(0,pivotIdx-1,n,mat,x))return true;
         return binarySearch(pivotIdx,r,n,mat,x);
     }
 };
+
 
 
 // Time Complexity:
