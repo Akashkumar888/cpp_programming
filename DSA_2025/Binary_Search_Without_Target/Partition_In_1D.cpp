@@ -1,4 +1,4 @@
-
+// jb bhi l or r ko mid pe le ja ya jay to while loop me while(l<r) hi rahta hai
 int partition(vector<int>&nums,int n){
     int l=0,r=n-1;
     while(l<r && nums[l]==nums[l+1]) l++;

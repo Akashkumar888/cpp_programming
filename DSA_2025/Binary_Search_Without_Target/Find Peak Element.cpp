@@ -1,4 +1,4 @@
-
+// jb bhi l or r ko mid pe le ja ya jay to while loop me while(l<r) hi rahta hai
 class Solution {
 public:
     int findPeakElement(vector<int>& arr) {

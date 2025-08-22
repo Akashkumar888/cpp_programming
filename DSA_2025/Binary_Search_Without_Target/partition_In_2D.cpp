@@ -1,3 +1,4 @@
+// jb bhi l or r ko mid pe le ja ya jay to while loop me while(l<r) hi rahta hai
 int partition(int l,int r,int n,vector<vector<int>>&mat){
       while(l<r){
           int mid=l+(r-l)/2;
