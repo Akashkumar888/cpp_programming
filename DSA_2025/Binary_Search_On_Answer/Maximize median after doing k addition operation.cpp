@@ -20,8 +20,8 @@ class Solution {
   int maximizeMedian(vector<int>& arr, int k) {
         int n = arr.size();
         sort(arr.begin(), arr.end());
-        long long l = arr[0];
-        long long r = arr[n - 1] + k;
+        long long l = arr[0];// without k operations 
+        long long r = arr[n - 1] + k; // after k operations 
         long long maxMedian = l;
         while (l <= r) {
             long long mid = l + (r - l) / 2;
@@ -49,3 +49,4 @@ class Solution {
 // Sorting: O(1) extra (if we use in-place sort like std::sort).
 // A few long long variables: O(1).
 // 👉 Total space complexity = O(1) (excluding input array storage).
+
