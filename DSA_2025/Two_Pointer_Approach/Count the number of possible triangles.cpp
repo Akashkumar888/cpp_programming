@@ -24,6 +24,31 @@ class Solution {
     }
 };
 
+class Solution {
+  public:
+    // Function to count the number of possible triangles.
+    int countTriangles(vector<int>& arr) {
+        // code here
+        int n=arr.size();
+        int count=0;
+        sort(arr.begin(),arr.end(),greater<>());
+        for(int i=0;i<n-2;i++){
+            int l=i+1;
+            int r=n-1;
+            while(l<r){
+                int sum=arr[l]+arr[r];
+                if(arr[i]<sum){
+                    count+=(r-l);
+                    l++;
+                }
+                else r--;
+            }
+        }
+        return count;
+    }
+};
+
+
 // Time Complexity
 // Sorting:
 // sort(arr.begin(), arr.end()); → O(n log n)
