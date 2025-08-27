@@ -1,0 +1,25 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    int n, m;
+    cin >> n >> m; // matrix size n x m
+    vector<vector<int>> mat(n, vector<int>(m));
+
+    for(int i=0;i<n;i++)
+        for(int j=0;j<m;j++)
+            cin >> mat[i][j];
+
+    map<int, vector<int>> mp; // key = i+j
+    for(int i=0;i<n;i++){
+        for(int j=0;j<m;j++){
+            mp[i+j].push_back(mat[i][j]);
+        }
+    }
+
+    cout << "Diagonal Traverse (i+j):\n";
+    for(auto &p: mp){
+        for(int x: p.second) cout << x << " ";
+        cout << "\n";
+    }
+}
