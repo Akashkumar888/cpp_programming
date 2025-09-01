@@ -1,7 +1,8 @@
 
+
 class Solution {
   public:
-    void rearrange(vector<int> &arr, int x) {
+  void rearrange(vector<int> &arr, int x) {
         // code here
         int n=arr.size();
         auto cmp=[&](int num1,int num2){
@@ -22,3 +23,7 @@ class Solution {
 // stable_sort is not in-place—it uses O(n) auxiliary space (unlike sort, which is O(log n)).
 // 👉 So total Space = O(n)
 
+
+
+// passing by reference with const & is safer and avoids unnecessary copies.
+auto cmp = [&](const T &a, const T &b){ ... };

@@ -20,3 +20,8 @@ class Solution {
 };
 
 
+// passing by reference with const & is safer and avoids unnecessary copies.
+auto lambda = [&](const string &s1, const string &s2){
+    return s1+s2 > s2+s1;
+};
+
