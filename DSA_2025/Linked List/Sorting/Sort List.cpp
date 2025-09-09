@@ -43,3 +43,35 @@ public:
         return mergeTwoList(left, right);  // Corrected function name
     }
 };
+
+
+
+
+
+class Solution {
+  public:
+    Node* sortList(Node* head) {
+        if (!head || !head->next) return head;
+
+        vector<int> vals;
+        Node* temp = head;
+
+        while (temp) {
+            vals.push_back(temp->data);
+            temp = temp->next;
+        }
+
+        sort(vals.begin(), vals.end());
+
+        temp = head;
+        int i = 0;
+        while (temp) {
+            temp->data = vals[i++];
+            temp = temp->next;
+        }
+
+        return head;
+    }
+};
+
+
