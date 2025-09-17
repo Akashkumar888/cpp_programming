@@ -72,9 +72,9 @@ class Solution {
                 string prev = strStack.top(); 
                 strStack.pop();
                 string temp;
-                temp.reserve(result.size() * repeat); // preallocate
+                temp.reserve(result.size() * repeat); // preallocate memory once
                 for (int i = 0; i < repeat; i++) {
-                    temp.append(result);
+                    temp.append(result);   // appends without reallocation
                 }
                 result = prev + temp; // merge with previous
             } 
