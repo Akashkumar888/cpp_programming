@@ -110,3 +110,31 @@ vector<int>nsi(int n,vector<int>&arr){
 };
 
 
+// 👉 For each element arr[i], count how many subarrays have arr[i] as the maximum, and add its contribution.
+
+// So the formula is: Contribution of arr[i]=arr[i]×(#of subarrays where arr[i] is max)
+// On the left, you can extend until you hit a greater element (otherwise, that greater would be the max).
+// On the right, you can extend until you hit a greater or equal element (to handle duplicates properly).
+// So:
+
+// prevGreater[i] = index of previous greater element (to the left).
+// nextGreater[i] = index of next greater element (to the right).
+
+// Then:
+// left = i - prevGreater[i] → how many choices for the left boundary.
+// right = nextGreater[i] - i → how many choices for the right boundary.
+
+// Total subarrays where arr[i] is max: left×right
+// ✅ Final Formula Contribution of arr[i]=arr[i]×(i−prevGreater[i])×(nextGreater[i]−i)
+// Sum this over all i.
+
+
+// 🔑 When to use left × right?
+// Always when counting number of subarrays where an element is the minimum/maximum.
+// Works for problems like:
+// Sum of Subarray Minimums / Maximums
+// Largest Rectangle in Histogram
+// Product of Subarray Minimums
+// ⚡ So the difference between your longest subarray problem and this sum of subarray max problem is:
+// In longest subarray: you only need the length of valid subarray, so you use (nextGreater - prevGreater - 1).
+// In sum of subarray maximums: you need the count of subarrays → so you multiply (i - prev) * (next - i).
