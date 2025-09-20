@@ -50,6 +50,8 @@ class Solution {
     }
 };
 
+// ✅ Total Time Complexity = O(n)
+// ✅ Space Complexity = O(n) (for ngi, pgi, and stacks)
 
 // 👉 For each element arr[i], count how many subarrays have arr[i] as the maximum, and add its contribution.
 
