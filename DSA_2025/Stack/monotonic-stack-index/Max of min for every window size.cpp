@@ -1,5 +1,3 @@
-
-
 class Solution {
   public:
   vector<int>next_smaller_index(int n,vector<int>&arr){
@@ -29,13 +27,17 @@ class Solution {
     vector<int> maxOfMins(vector<int>& arr) {
         //  code here
         // Max of min for every window size
+        //using NSR ans NSL
+        // “We solve it using NSL (Next Smaller to Left) and NSR (Next Smaller to Right)”
         int n=arr.size();
         vector<int>result(n,INT_MIN);
         // The result vector is 0-indexed but window sizes go from 1 to n.
 // result[k] is meant to store the maximum of minimums for window size k+1.
 // So if the window length is len, we should place arr[i] at result[len-1].
-        vector<int>nsi=next_smaller_index(n,arr);
-        vector<int>psi=prev_smaller_index(n,arr);
+        vector<int> nsi = next_smaller_index(n, arr); // NSR → Next Smaller to Right
+        vector<int> psi = prev_smaller_index(n, arr); // NSL → Next Smaller to Left
+        // nsi[i] → gives index of the Next Smaller Element on the Right (or n if none exists).
+        // psi[i] → gives index of the Previous Smaller Element on the Left (or -1 if none exists).
         for(int i=0;i<n;i++){
             // which formula use here 
             // int len=(nsi[i]-i)*(i-psi[i]);
@@ -53,4 +55,3 @@ class Solution {
         return result;
     }
 };
-
