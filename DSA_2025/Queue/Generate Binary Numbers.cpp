@@ -3,6 +3,9 @@ class Solution {
   public:
     vector<string> generateBinary(int n) {
         // code here
+       // queue
+        //   ↔ Rear      [ A ] [ B ] [ C ] [ D ]    Front ↔
+        //   push/queue↑                            ↑queue/pop
         if(n==1)return {"1"};
         vector<string>ans;
         queue<string>q;
