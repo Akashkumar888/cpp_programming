@@ -22,3 +22,14 @@ class Solution {
         }
     }
 };
+
+// dq.front() → gives the element at the beginning (leftmost side).
+// dq.back() → gives the element at the end (rightmost side).
+// dq.push_front(x) → inserts at the front (left side).
+// dq.push_back(x) → inserts at the back (right side).
+// dq.pop_front() → removes from the front.
+// dq.pop_back() → removes from the back.
+
+// In deque,
+// Front = left side
+// Rear/Back = right side
