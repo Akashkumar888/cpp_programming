@@ -69,3 +69,45 @@ class Solution {
 // If there are k paths, each of max length 2n-1
 // Space = O(k*n)
 // ✅ Overall space complexity = O(n^2 + k*n)
+
+class Solution {
+  public:
+  vector<char>dir={'D','L','R','U'};
+  vector<int>x={1,0,0,-1};
+  vector<int>y={0,-1,1,0};
+  void solve(int i,int j,int n,vector<vector<int>>&mat,string &str,vector<string>&result){
+      if(i<0 || j<0 || i>=n || j>=n || mat[i][j]==0)return;
+      if(i==n-1 && j==n-1){
+          result.push_back(str);
+          return;
+      }
+      // backtrack and for avoid cycle 
+      int temp=mat[i][j];
+      mat[i][j]=0;
+      
+      for(int k=0;k<4;k++){
+          int new_i=i+x[k];
+          int new_j=j+y[k];
+          char dr=dir[k];
+          str.push_back(dr);
+          solve(new_i,new_j,n,mat,str,result);
+          str.pop_back();
+      }
+      
+      mat[i][j]=temp;
+  }
+    vector<string> ratInMaze(vector<vector<int>>& maze) {
+        // code here
+        // Consider a rat placed at position (0, 0) in an n x n square matrix maze[][]. 
+        //The rat's goal is to reach the destination at position (n-1, n-1). 
+        //The rat can move in four possible directions: 'U'(up), 'D'(down), 'L' (left), 'R' (right).
+        // 0: A blocked cell through which the rat cannot travel.
+       // 1: A free cell that the rat can pass through.
+    //   lexicographically smallest order. then 'D' 'L' 'R' 'U'
+        int n=maze.size();
+        vector<string>result;
+        string str="";
+        solve(0,0,n,maze,str,result);
+        return result;
+    }
+};
