@@ -153,6 +153,140 @@ public:
 
 
 
+class Solution {
+public:
+    int dx[8] = {2,1,-1,-2,-2,-1,1,2};
+    int dy[8] = {1,2,2,1,-1,-2,-2,-1};
+    
+    // Count available onward moves (degree) from (i,j)
+    int countMoves(int i, int j, int n, vector<vector<int>>& visited) {
+        int cnt = 0;
+        for(int k=0;k<8;k++){
+            int ni=i+dx[k];
+            int nj=j+dy[k];
+            if(ni>=0 && nj>=0 && ni<n && nj<n && !visited[ni][nj]){
+                cnt++;
+            }
+        }
+        return cnt;
+    }
+    
+    void solve(int i, int j, int step, int n, vector<vector<int>>& visited,
+               vector<vector<int>>& result, bool &found) {
+        if(found) return;
+        visited[i][j]=1;
+        result[i][j]=step;
+        
+        if(step==n*n-1){ // all cells visited
+            found=true;
+            return;
+        }
+        
+        vector<pair<int,int>> moves; // {degree, moveIndex}
+        for(int k=0;k<8;k++){
+            int ni=i+dx[k];
+            int nj=j+dy[k];
+            if(ni>=0 && nj>=0 && ni<n && nj<n && !visited[ni][nj]){
+                int deg=countMoves(ni,nj,n,visited);
+                moves.push_back({deg,k});
+            }
+        }
+        
+        sort(moves.begin(), moves.end()); // Warnsdorff: fewest onward moves first
+        
+        for(auto &p: moves){
+            int k = p.second;
+            int ni=i+dx[k];
+            int nj=j+dy[k];
+            solve(ni,nj,step+1,n,visited,result,found);
+            if(found) return;
+        }
+        
+        visited[i][j]=0;
+        result[i][j]=-1;
+    }
+    
+    vector<vector<int>> knightTour(int n) {
+        if(n<=0) return {};
+        if(n==1) return {{0}};
+        if(n==2 || n==3 || n==4) return {}; // no solution exists
+        
+        vector<vector<int>> visited(n, vector<int>(n,0));
+        vector<vector<int>> result(n, vector<int>(n,-1));
+        bool found=false;
+        
+        solve(0,0,0,n,visited,result,found);
+        if(!found) return {};
+        return result;
+    }
+};
+
+class Solution {
+public:
+    int dx[8] = {2,1,-1,-2,-2,-1,1,2};
+    int dy[8] = {1,2,2,1,-1,-2,-2,-1};
+    
+    // Count available onward moves (degree) from (i,j)
+    int countMoves(int i, int j, int n, vector<vector<int>>& visited) {
+        int cnt = 0;
+        for(int k=0;k<8;k++){
+            int ni=i+dx[k];
+            int nj=j+dy[k];
+            if(ni>=0 && nj>=0 && ni<n && nj<n && !visited[ni][nj]){
+                cnt++;
+            }
+        }
+        return cnt;
+    }
+    
+    void solve(int i, int j, int step, int n, vector<vector<int>>& visited,
+               vector<vector<int>>& result, bool &found) {
+        if(found) return;
+        visited[i][j]=1;
+        result[i][j]=step;
+        
+        if(step==n*n-1){ // all cells visited
+            found=true;
+            return;
+        }
+        
+        // Use min-heap to select next move with smallest degree first
+        priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> pq; // {degree, moveIndex}
+        for(int k=0;k<8;k++){
+            int ni=i+dx[k];
+            int nj=j+dy[k];
+            if(ni>=0 && nj>=0 && ni<n && nj<n && !visited[ni][nj]){
+                int deg=countMoves(ni,nj,n,visited);
+                pq.push({deg,k});
+            }
+        }
+        
+        while(!pq.empty()){
+            int k=pq.top().second;
+            pq.pop();
+            int ni=i+dx[k];
+            int nj=j+dy[k];
+            solve(ni,nj,step+1,n,visited,result,found);
+            if(found) return;
+        }
+        visited[i][j]=0;
+        result[i][j]=-1;
+    }
+
+    vector<vector<int>> knightTour(int n) {
+        if(n<=0) return {};
+        if(n==1) return {{0}};
+        if(n==2 || n==3 || n==4) return {}; // no solution exists
+        
+        vector<vector<int>> visited(n, vector<int>(n,0));
+        vector<vector<int>> result(n, vector<int>(n,-1));
+        bool found=false;
+        
+        solve(0,0,0,n,visited,result,found);
+        if(!found) return {};
+        return result;
+    }
+};
 
 
 
