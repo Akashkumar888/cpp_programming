@@ -43,6 +43,8 @@ class Solution {
         // If there are multiple bottom-most nodes for a horizontal distance from the root,
         // then the latter one in the level order traversal is considered.
         // vertical bottom view that's why we use bfs 
+        // vertical traversal , bottom view and top view are similar code only diff of map 
+        // vertical traversal  -> map<int,vector<int>>&mp ,bottom view and top view -> map<int,int>mp
         vector<int>result;
         map<int,int>mp;
         bfs(root,mp);

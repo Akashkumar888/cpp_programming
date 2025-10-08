@@ -44,6 +44,8 @@ class Solution {
         // If multiple nodes overlap at the same horizontal position, only the topmost 
         //(closest to the root) node is included in the view. 
         // vertical top view that's why we use bfs 
+        // vertical traversal , bottom view and top view are similar code only diff of map 
+        // vertical traversal  -> map<int,vector<int>>&mp ,bottom view and top view -> map<int,int>mp
         vector<int>result;
         map<int,int>mp;
         bfs(root,mp);
