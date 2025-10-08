@@ -29,3 +29,19 @@ class Solution {
         return ans;
     }
 };
+
+class Solution {
+  public:
+  void dfs(Node*root,vector<int>&result){
+      if(root==NULL)return;
+      dfs(root->left,result);
+      dfs(root->right,result);
+      result.push_back(root->data);
+  }
+    vector<int> postOrder(Node* root) {
+        // code here
+        vector<int>result;
+        dfs(root,result);
+        return result;
+    }
+};
