@@ -113,3 +113,32 @@ public:
     	return ans;
     }
 };
+
+class Solution {
+  public:
+  void bfs(Node*root,vector<int>&result){
+      if(root==NULL)return;
+      queue<Node*>q;
+      q.push(root);
+      bool flip=true;
+      while(!q.empty()){
+          int n=q.size();
+          vector<int>ans(n);
+          for(int i=0;i<n;i++){
+              Node*curr=q.front();
+              q.pop();
+              ans[flip ? i : n-1-i]=curr->data;
+              if(curr->left)q.push(curr->left);
+              if(curr->right)q.push(curr->right);
+          }
+          for(int j=0;j<n;j++)result.push_back(ans[j]);
+          flip=!flip;
+      }
+  }
+    vector<int> zigZagTraversal(Node* root) {
+        // code here
+        vector<int>result;
+        bfs(root,result);
+        return result;
+    }
+};
