@@ -70,3 +70,74 @@ void morrisInorder(TreeNode* root) {
         }
     }
 }
+
+
+// Inorder Traversal
+// Given a root of a Binary Tree, your task is to return its Inorder Traversal.
+// Note: An inorder traversal first visits the left child (including its entire subtree), then visits the node, and finally visits the right child (including its entire subtree).
+
+class Solution {
+  public:
+  vector<int> morrisInOrder(Node*root){
+      if(root==NULL)return {};
+      Node*curr=root;
+      vector<int>ans;
+      while(curr){
+          if(curr->left==NULL){
+            ans.push_back(curr->data);
+            curr=curr->right;
+          }
+          else{
+              Node*leftChild=curr->left;
+              while(leftChild->right){
+                  leftChild=leftChild->right;
+              }
+              leftChild->right=curr;
+              // delete node
+              Node*temp=curr;
+              curr=curr->left;
+              temp->left=NULL;
+          }
+      }
+      return ans;
+  }
+    vector<int> inOrder(Node* root) {
+        // code here
+        return morrisInOrder(root);
+    }
+};
+
+
+// Iterative Inorder
+// Given a binary tree. Find the inorder traversal of the tree without using recursion.
+
+class Solution {
+  public:
+  vector<int> morrisInOrder(Node*root){
+      if(root==NULL)return {};
+      Node*curr=root;
+      vector<int>ans;
+      while(curr){
+          if(curr->left==NULL){
+            ans.push_back(curr->data);
+            curr=curr->right;
+          }
+          else{
+              Node*leftChild=curr->left;
+              while(leftChild->right){
+                  leftChild=leftChild->right;
+              }
+              leftChild->right=curr;
+              // delete node
+              Node*temp=curr;
+              curr=curr->left;
+              temp->left=NULL;
+          }
+      }
+      return ans;
+  }
+    vector<int> inOrder(Node* root) {
+        // code here
+        return morrisInOrder(root);
+    }
+};
