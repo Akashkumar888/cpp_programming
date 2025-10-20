@@ -12,7 +12,6 @@ class Solution {
     }
 };
 
-
 // ⏱ Time Complexity
 // stable_sort in C++ uses a merge sort variant under the hood.
 // Complexity: O(n log n) comparisons.
