@@ -1,3 +1,49 @@
+class Solution {
+public:
+// 3 or more.
+    bool isPossible(vector<int>& nums) {
+        int k=3;//All subsequences have a length of 3 or more.
+        typedef pair<int, int> P; // {last number, length of subsequence}
+        auto cmp = [&](const P& a, const P& b) {
+            if (a.first == b.first)return a.second > b.second; // shorter length first
+            return a.first > b.first; // smaller last number first
+        };
+
+        priority_queue<P, vector<P>, decltype(cmp)> pq(cmp);
+
+        for (int &num : nums) {
+            // Remove all subsequences that can’t be extended
+            while (!pq.empty() && pq.top().first + 1 < num) {
+                if (pq.top().second < k)
+                    return false;
+                pq.pop();
+            }
+
+            if (pq.empty() || pq.top().first == num) {
+                // Start a new subsequence
+                pq.push({num, 1});
+            } else {
+                // Extend the shortest subsequence ending with num - 1
+                auto top = pq.top();
+                pq.pop();
+                pq.push({num, top.second + 1});
+            }
+        }
+
+        // Check all remaining subsequences
+        while (!pq.empty()) {
+            if (pq.top().second < k)
+                return false;
+            pq.pop();
+        }
+        return true;
+    }
+};
+// ✅ Conclusion
+// If the problem says “split into groups of exactly k consecutive numbers” → use isPossibleDivide / isNStraightHand style.
+// If the problem says “split into subsequences of length ≥ k” → use heap-based or map-based greedy approach (tracking end[num]).
+
+
 
 class Solution {
 public:
