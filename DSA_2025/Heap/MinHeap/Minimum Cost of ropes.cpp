@@ -8,7 +8,7 @@ class Solution {
         int totalCost=0;
         priority_queue<int,vector<int>,greater<int>>pq;
         for(int &num:arr)pq.push(num);
-        while(pq.size()>=2){
+        while(pq.size()>=2){ // heap aur queue ke question me !q.empty() ya pq.size()>=2 ya q.size()>=2 ya totalSum > half
             int first=pq.top();
             pq.pop();
             int second=pq.top();
