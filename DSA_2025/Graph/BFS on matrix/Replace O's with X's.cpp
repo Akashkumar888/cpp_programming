@@ -10,6 +10,8 @@ class Solution {
         int m=grid[0].size();
         //You have to replace all 'O' or a group of 'O' with 'X' that are surrounded by 'X'.
         // surrounded by 'X'. that's why we start from i=1 and j=1 
+        // jisme graph nh banana pade unordered_map se vo bfs dfs on matrix me rahega 
+        // jisme banana pade vo bfs dfs rahega with graph 
         vector<vector<bool>>visited(n,vector<bool>(m,false));
         queue<pair<int,int>>q;
         // 1️⃣ Push all boundary 'O' into queue
