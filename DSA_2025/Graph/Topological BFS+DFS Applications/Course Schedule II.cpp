@@ -2,7 +2,6 @@
 class Solution {
 public:
     // cycleDetection + Topo DFS
-    // when dfs then topological sort
     bool dfs(int u, vector<bool> &inRec, vector<bool> &visited,unordered_map<int,vector<int>> &adj, vector<int> &result) {
         visited[u] = true;
         inRec[u] = true;
@@ -47,9 +46,14 @@ public:
 class Solution {
 public:
 // kahn's algorithm 
-// when bfs then topological -> kahn's algorithm 
-     void topoBFS(int n,vector<int>&indegree,unordered_map<int,vector<int>>&graph,vector<int>&ans){
+     void topoBFS(int n,unordered_map<int,vector<int>>&graph,vector<int>&ans){
+        vector<int>indegree(n,0);
         queue<int>q;
+        for(int u=0;u<n;u++){
+           for(int &v:graph[u]){
+            indegree[v]++;
+           }
+        }
         for(int i=0;i<n;i++){
             if(indegree[i]==0)q.push(i);
         }  
@@ -67,17 +71,15 @@ public:
  }
     vector<int> findOrder(int n, vector<vector<int>> &prerequisites) {
         unordered_map<int,vector<int>>adj;
-        vector<int>indegree(n,0);
     // prerequisites[][] where prerequisites[i] = [x, y] indicates that we need to take course  y first if we want to take course x.
     // Find the ordering of courses we should take to complete all the courses.
         for(auto &edge:prerequisites){
             int u=edge[0];
             int v=edge[1];
             adj[v].push_back(u);
-            indegree[u]++;
         }
         vector<int>ans;
-        topoBFS(n,indegree,adj,ans);
+        topoBFS(n,adj,ans);
         if(ans.size()!=n) return {};
         return ans;
     }

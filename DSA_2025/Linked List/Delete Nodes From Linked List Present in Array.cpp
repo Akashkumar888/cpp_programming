@@ -38,3 +38,22 @@ bool binarySearch(int n,vector<int>&nums,int tr){
        return dummy->next;
     }
 };
+
+class Solution {
+public:
+    ListNode* modifiedList(vector<int>& nums, ListNode* head) {
+       unordered_set<int>st(nums.begin(),nums.end());
+       ListNode*dummy=new ListNode(-1);
+       ListNode*prev=dummy;
+       ListNode*temp=head;
+       while(temp){
+       if(st.find(temp->val)==st.end()){ // means element not found 
+        prev->next=temp;
+        prev=prev->next;
+       }
+       temp=temp->next;
+       }
+       prev->next=NULL;
+       return dummy->next;
+    }
+};
