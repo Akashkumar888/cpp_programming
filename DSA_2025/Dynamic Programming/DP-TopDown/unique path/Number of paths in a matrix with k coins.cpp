@@ -47,6 +47,50 @@ class Solution {
     }
 };
 
+class Solution {
+public:
+    int numberOfPath(vector<vector<int>>& mat, int k) {
+        int n = mat.size();
+        int m = mat[0].size();
+
+        // dp[i][j][s] = number of ways to reach (i,j) with sum s
+        vector<vector<vector<int>>> dp(
+            n, vector<vector<int>>(m, vector<int>(k + 1, 0))
+        );
+        
+        // Start: sum includes mat[0][0]
+        if (mat[0][0] <= k) dp[0][0][mat[0][0]] = 1;
+
+        // Fill DP
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+
+                for (int s = 0; s <= k; s++) {
+                    if (dp[i][j][s] == 0) continue;
+
+                    // Move Down
+                    if (i + 1 < n) {
+                        int ns = s + mat[i + 1][j];
+                        if (ns <= k)
+                            dp[i + 1][j][ns] += dp[i][j][s];
+                    }
+
+                    // Move Right
+                    if (j + 1 < m) {
+                        int ns = s + mat[i][j + 1];
+                        if (ns <= k)
+                            dp[i][j + 1][ns] += dp[i][j][s];
+                    }
+                }
+
+            }
+        }
+
+        // Answer: ways to reach bottom-right with sum = k
+        return dp[n - 1][m - 1][k];
+    }
+};
+
 
 
 class Solution {
