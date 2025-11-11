@@ -26,6 +26,7 @@ class Solution {
     }
 };
 
+
 class Solution {
   public:
 //   Stock Buy and Sell with Cooldown
