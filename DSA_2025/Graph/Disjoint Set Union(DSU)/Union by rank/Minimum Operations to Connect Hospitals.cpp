@@ -13,8 +13,8 @@ vector<int>rank;
         return parent[i]=find(parent[i]);
     }
     void unionset(int x,int y){ // union ek keyword hai isliye unionset likho 
-        int x_parent=parent[x];
-        int y_parent=parent[y];
+        int x_parent = find(x);
+        int y_parent = find(y);
         if(x_parent==y_parent)return;
         if(rank[x_parent]<rank[y_parent]){
             parent[x_parent]=y_parent; // y ko x ka parent 
@@ -71,8 +71,8 @@ vector<int>rank;
         return parent[i]=find(parent[i]);
     }
     void unionset(int x,int y){ // union ek keyword hai isliye unionset likho 
-        int x_parent=parent[x];
-        int y_parent=parent[y];
+        int x_parent = find(x);
+        int y_parent = find(y);
         if(x_parent==y_parent)return;
         if(rank[x_parent]<rank[y_parent]){
             parent[x_parent]=y_parent; // y ko x ka parent 
