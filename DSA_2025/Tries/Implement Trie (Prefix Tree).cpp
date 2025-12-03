@@ -1,15 +1,19 @@
 
-class TrieNode{
+
+class TrieNode {
 public:
+    int childcount;
     bool isendof;
     string word;
-    TrieNode * children[26];
-    TrieNode(){
-    for(int i=0;i<26;i++){
-        children[i]=NULL;
-    }
-    isendof=false;
-    word="";
+    TrieNode* children[26];
+
+    TrieNode() {
+        childcount = 0;
+        isendof=false;
+        word="";
+        for (int i = 0; i < 26; i++) {
+            children[i] = NULL;
+        }
     }
     ~TrieNode(){
     for(int i=0;i<26;i++){
@@ -19,10 +23,10 @@ public:
 };
 class Trie {
     private:
-    TrieNode*root;
+    TrieNode*root; // jb main function na ho to global declarations
 public:
     Trie() {
-        root=new TrieNode();
+        root=new TrieNode(); // contructor which is called when object is created.
     }
     
     void insert(string word) {

@@ -1,3 +1,51 @@
+// ✔ XOR is:
+
+// Associative
+// (a ^ b) ^ c = a ^ (b ^ c)
+
+// Commutative
+// a ^ b = b ^ a
+
+// Self-inverse / Reversible
+// a ^ a = 0
+// a ^ b ^ b = a
+
+
+// XOR is reversible, not transitive.
+
+// a ^ b = c  
+// ⇒ c ^ b = a  
+// ⇒ c ^ a = b
+
+// This works because XOR undoes itself.
+class Solution {
+public:
+ int solve(int n){ //well-known XOR-prefix formula.
+      if(n%4==1)return 1;
+      else if(n%4==2)return n+1;
+      else if(n%4==3)return 0;
+      else if(n%4==0)return n;
+  }
+    vector<int> subsetXOR(int n) {
+        vector<int> ans;
+        if(n==1) return {1};
+        for(int i=1;i<=n;i++)ans.push_back(i);
+        int allXor=solve(n);
+        if(allXor==n)return ans;
+        int newXor=allXor ^ n;
+        // newXor = T ^ x = n
+        // → x = T ^ n
+        // This is EXACT reversible XOR logic.
+        vector<int>result;
+        for(int &num:ans){
+            if((num^allXor)==n)continue;
+            else result.push_back(num);
+        }
+        return result;
+    }
+};
+
+
 
 class Solution {
 public:

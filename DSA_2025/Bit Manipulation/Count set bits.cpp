@@ -3,6 +3,31 @@ class Solution {
   public:
     int countSetBits(int n) {
         // code here
+        if(n == 0) return 0;
+        // But this ALSO depends on whether your system is 32-bit or 64-bit.
+        // correct MSB index (most significant bit)
+        int msbIndex = 31 - __builtin_clz(n);   // highest set bit position
+
+        // count of set bits contributed by numbers of form 2^msbIndex
+        int fullBlocks = msbIndex * (1 << (msbIndex - 1));
+
+        // number of MSB(1) contributed from numbers [2^msbIndex .. n]
+        int msbContribution = n - (1 << msbIndex) + 1;
+
+        // numbers remaining after removing the highest power-of-two block
+        int remainder = n - (1 << msbIndex);
+
+        return fullBlocks + msbContribution + countSetBits(remainder);
+    }
+};
+
+
+
+
+class Solution {
+  public:
+    int countSetBits(int n) {
+        // code here
         long long ans=0;
         for(int i=0;(1LL<<i)<=n;i++){
             long long cycle=1LL<<(i+1);
