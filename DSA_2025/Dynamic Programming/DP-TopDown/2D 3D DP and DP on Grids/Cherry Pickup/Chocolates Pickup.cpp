@@ -136,6 +136,169 @@ class Solution {
 };
 
 
+class Solution {
+public:
+//   c2 = r1 + c1 – r2 is valid only when both robots start at (0,0) and both robots always move down or right.
+//   Two robots are collecting chocolates from this grid:
+// Robot 1 starts at the top-left corner (0, 0)
+// Robot 2 starts at the top-right corner (0, m - 1)
+// Your task is to determine the maximum total number of chocolates both robots can collect while following these rules:
+// From a cell (i, j), robots can move to cell (i + 1, j - 1), (i + 1, j), or (i + 1, j + 1).
+// When a robot visits a cell, it collects all the chocolates there.
+// If both robots land on the same cell, the chocolates in that cell are collected only once.
+// Robots cannot move outside the boundaries of the grid.
+// Both robots must continue moving until they reach the bottom row of the grid.
+  int dx[3]={1,1,1};
+  int dy[3]={-1,0,1};//From a cell (i, j), robots can move to cell (i + 1, j - 1), (i + 1, j), or (i + 1, j + 1).
+  int solve(int r,int c1,int c2,int n,int m,vector<vector<int>>&mat,vector<vector<vector<int>>>&dp){
+      
+      // r1 == r2 always moves simuletaneously. 
+      // out of bounds
+      if(r < 0 || r >= n  || c1 < 0 || c1 >= m || c2 < 0  || c2 >= m)return -1e8;// to avoid out of bound
+      
+      // Both robots must continue moving until they reach the bottom row of the grid.
+        // last row
+          if(r == n-1){
+              if(c1 == c2)return mat[r][c1];
+              return mat[r][c1] + mat[r][c2];
+          }
+      
+        if(dp[r][c1][c2]!=-1)return dp[r][c1][c2];
+        
+        int sum=-1e8;// because max cell value need 
+          // chocolates collected
+            int currChocolates = 0;
+            if (c1 == c2) currChocolates = mat[r][c1];// same cell → count once
+            else currChocolates = mat[r][c1] + mat[r][c2];
+        
+        for(int k1 = 0; k1 < 3; k1++){
+          int ni = r + dx[k1];
+          int nj1 = c1 + dy[k1];
+          for(int k2 = 0; k2 < 3; k2++){ //two loops use here k1,k2 beacuse three variable change r1,c1,c2
+              int nj2 = c2 + dy[k2];
+              sum=max(sum,solve(ni, nj1, nj2, n, m, mat, dp));
+          }
+      } 
+      return dp[r][c1][c2]=sum+currChocolates;
+  }
+    int cherryPickup(vector<vector<int>>& grid) {
+        // code here
+         // robot1 starts at (0,0)
+         // robot2 starts at (0,m-1)
+        int n=grid.size();
+        int m=grid[0].size();
+        vector<vector<vector<int>>>dp(n,vector<vector<int>>(m,vector<int>(m+1,-1)));
+        return solve(0,0,m-1,n,m,grid,dp);
+    }
+};
+
+class Solution {
+public:
+//   c2 = r1 + c1 – r2 is valid only when both robots start at (0,0) and both robots always move down or right.
+//   Two robots are collecting chocolates from this grid:
+// Robot 1 starts at the top-left corner (0, 0)
+// Robot 2 starts at the top-right corner (0, m - 1)
+// Your task is to determine the maximum total number of chocolates both robots can collect while following these rules:
+// From a cell (i, j), robots can move to cell (i + 1, j - 1), (i + 1, j), or (i + 1, j + 1).
+// When a robot visits a cell, it collects all the chocolates there.
+// If both robots land on the same cell, the chocolates in that cell are collected only once.
+// Robots cannot move outside the boundaries of the grid.
+// Both robots must continue moving until they reach the bottom row of the grid.
+  int dx[3]={1,1,1};
+  int dy[3]={-1,0,1};//From a cell (i, j), robots can move to cell (i + 1, j - 1), (i + 1, j), or (i + 1, j + 1).
+    int cherryPickup(vector<vector<int>>& grid) {
+        // code here
+         // robot1 starts at (0,0)
+         // robot2 starts at (0,m-1)
+        int n=grid.size();
+        int m=grid[0].size();
+        vector<vector<vector<int>>>dp(n,vector<vector<int>>(m,vector<int>(m,0)));
+        for(int c1=0;c1<m;c1++){
+            for(int c2=0;c2<m;c2++){
+                if(c1==c2)dp[n-1][c1][c2]=grid[n-1][c1];
+                else dp[n-1][c1][c2]= grid[n-1][c1] + grid[n-1][c2];
+            }
+        }
+        for(int r=n-2;r>=0;r--){
+            for(int c1=0;c1<m;c1++){
+                for(int c2=0;c2<m;c2++){
+                    int sum=-1e8;// because max cell value need 
+                    // chocolates collected
+                        int currChocolates = 0;
+                    if (c1 == c2) currChocolates = grid[r][c1];// same cell → count once
+                    else currChocolates = grid[r][c1] + grid[r][c2];
+                    
+                    for(int k1 = 0; k1 < 3; k1++){
+                    int ni = r + dx[k1];
+                    int nj1 = c1 + dy[k1];
+                    for(int k2 = 0; k2 < 3; k2++){ //two loops use here k1,k2 beacuse three variable change r1,c1,c2
+                    int nj2 = c2 + dy[k2];
+                    if(ni>=0 && ni<n && nj1>=0 && nj1<m && nj2>=0 && nj2<m)sum=max(sum,dp[ni][nj1][nj2]);
+                    }
+                } 
+                dp[r][c1][c2]=sum+currChocolates;
+                }
+            }
+        }
+        return dp[0][0][m-1];
+    }
+};
+
+class Solution {
+public:
+//   c2 = r1 + c1 – r2 is valid only when both robots start at (0,0) and both robots always move down or right.
+//   Two robots are collecting chocolates from this grid:
+// Robot 1 starts at the top-left corner (0, 0)
+// Robot 2 starts at the top-right corner (0, m - 1)
+// Your task is to determine the maximum total number of chocolates both robots can collect while following these rules:
+// From a cell (i, j), robots can move to cell (i + 1, j - 1), (i + 1, j), or (i + 1, j + 1).
+// When a robot visits a cell, it collects all the chocolates there.
+// If both robots land on the same cell, the chocolates in that cell are collected only once.
+// Robots cannot move outside the boundaries of the grid.
+// Both robots must continue moving until they reach the bottom row of the grid.
+  int dx[3]={1,1,1};
+  int dy[3]={-1,0,1};//From a cell (i, j), robots can move to cell (i + 1, j - 1), (i + 1, j), or (i + 1, j + 1).
+    int cherryPickup(vector<vector<int>>& grid) {
+        // code here
+         // robot1 starts at (0,0)
+         // robot2 starts at (0,m-1)
+        int n=grid.size();
+        int m=grid[0].size();
+        vector<vector<int>>prev(m,vector<int>(m,0));
+        vector<vector<int>>temp(m,vector<int>(m,0));
+        for(int c1=0;c1<m;c1++){
+            for(int c2=0;c2<m;c2++){
+                if(c1==c2)prev[c1][c2]=grid[n-1][c1];
+                else prev[c1][c2]= grid[n-1][c1] + grid[n-1][c2];
+            }
+        }
+        for(int r=n-2;r>=0;r--){
+            for(int c1=0;c1<m;c1++){
+                for(int c2=0;c2<m;c2++){
+                    int sum=-1e8;// because max cell value need 
+                    // chocolates collected
+                    int currChocolates = 0;
+                    if (c1 == c2) currChocolates = grid[r][c1];// same cell → count once
+                    else currChocolates = grid[r][c1] + grid[r][c2];
+                    
+                    for(int k1 = 0; k1 < 3; k1++){
+                    int ni = r + dx[k1];
+                    int nj1 = c1 + dy[k1];
+                    for(int k2 = 0; k2 < 3; k2++){ //two loops use here k1,k2 beacuse three variable change r1,c1,c2
+                    int nj2 = c2 + dy[k2];
+                    if(ni>=0 && ni<n && nj1>=0 && nj1<m && nj2>=0 && nj2<m)sum=max(sum,prev[nj1][nj2]);
+                    }
+                } 
+                temp[c1][c2]=sum+currChocolates;
+                }
+            }
+            prev=temp;
+        }
+        return prev[0][m-1];
+    }
+};
+
+
 
 class Solution {
 public:
@@ -198,3 +361,4 @@ int f(int i,int j1,int j2,int m,int n,vector<vector<int>>& grid,vector<vector<ve
     return front[0][n-1];
     }
 };
+

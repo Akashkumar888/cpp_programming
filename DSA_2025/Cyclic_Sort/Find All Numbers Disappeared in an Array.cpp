@@ -7,8 +7,8 @@ public:
             int val = nums[i];
             if (val >= 1 && val <= n && nums[i] != nums[val - 1]) {
                 swap(nums[i], nums[val - 1]);
-            } else
-                i++;
+            } 
+            else i++;
         }
     }
     vector<int> findDisappearedNumbers(vector<int>& nums) {

@@ -10,9 +10,9 @@ void cyclicSort(vector<int>& nums) {
             if (val >= 1 && val <= n && nums[i] != nums[val - 1]) {
     // Only place nums[i] if it lies within [1, n] and is not already in correct place
                 swap(nums[i], nums[val - 1]);
-            } else {
-                i++;
-            }
+            } 
+            else i++;
+            
         }
     }
     vector<int> findDuplicates(vector<int>& nums) {
@@ -60,3 +60,26 @@ class Solution {
 };
 
 // Cyclic sort is super efficient when the numbers are supposed to be in the range [1, n] or [0, n-1]. Examples include:
+
+class Solution {
+  public:
+    vector<int> findDuplicates(vector<int>& arr) {
+        // code here
+        vector<int>result;
+        int n=arr.size();
+        int i=0;
+        while(i<n){
+            int val = arr[i];
+            // if already 1 to n hai to thik otherwise only choose 1 to n number valid
+            if (val >= 1 && val <= n && arr[i] != arr[val - 1]) {
+    // Only place nums[i] if it lies within [1, n] and is not already in correct place
+                swap(arr[i], arr[val - 1]);
+            } 
+            else i++;
+        }
+        for(int i=0;i<n;i++){
+            if(arr[i]!=i+1)result.push_back(arr[i]);
+        }
+        return result;
+    }
+};
