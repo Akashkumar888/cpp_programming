@@ -370,3 +370,42 @@ public:
     }
 };
 
+class Solution {
+public:
+// You need to determine the maximum possible amount of money you can win if you go first.
+// Note: Both the players are playing optimally. -> use DP
+// when it's your turn
+//do your best (max)
+// when it's your opponent turn
+// expect the worst from the result (min)
+// min max game strategy
+// difference of player1 - player2
+    bool predictTheWinner(vector<int>& nums) {
+        int n=nums.size();
+        vector<vector<int>>dp(n,vector<int>(n,0));
+        // base case: same index
+        for (int i=0;i<n;i++) dp[i][i] = nums[i];
+        // base case: two elements
+        // base case: two elements (FIXED)
+        for (int i = 0; i + 1 < n; i++)
+            dp[i][i + 1] = max(
+                nums[i] - nums[i + 1],
+                nums[i + 1] - nums[i]
+            );
+        // bottom-up in YOUR style:
+        // i from n-1 → 0
+        // j from i+2 → n-1
+        for(int i=n-1;i>=0;i--){
+            for(int j=i+2;j<n; j++){
+
+                int take_i=nums[i]-dp[i+1][j];
+
+                int take_j=nums[j]-dp[i][j-1];
+
+                dp[i][j]=max(take_i, take_j);
+            }
+        }
+        int diffOfPlayer1AndPlayer2=dp[0][n-1];
+        return diffOfPlayer1AndPlayer2 >=0;
+    }
+};
