@@ -33,7 +33,7 @@ class Solution {
         // code here
         int n=s1.size();
         int m=s2.size();
-        vector<vector<int>>dp(n+1,vector<int>(m+1,-1));
+        vector<vector<int>>dp(n+1,vector<int>(m+1,-1)); // beacuse dp[n][m] that why [n+1][m+1] use 
         return solve(n,m,s1,s2,dp);
     }
 };
@@ -52,16 +52,36 @@ class Solution {
         int n=s1.size();
         int m=s2.size();
         vector<vector<int>>dp(n+1,vector<int>(m+1,0));
-        dp[0][0]=0;
         for(int i=1;i<=n;i++)dp[i][0]=0;
         for(int j=1;j<=m;j++)dp[0][j]=0;
         
         for(int i=1;i<=n;i++){
             for(int j=1;j<=m;j++){
                 if(s1[i-1]==s2[j-1])dp[i][j]= 1+dp[i-1][j-1];
-                else dp[i][j]= 0+max(dp[i-1][j],dp[i][j-1]);
+                else dp[i][j]= 0+max(dp[i-1][j],dp[i][j-1]);// ye else me rahega bottom up me 
             }
         }
         return dp[n][m];
     }
 };
+
+class Solution {
+public:
+    int longestCommonSubsequence(string s1, string s2) {
+        int n=s1.size();
+        int m=s2.size();
+        vector<int>prev(m+1,0),temp(m+1,0);
+        // for(int i=1;i<=n;i++)dp[i][0]=0; // only use for column but it use row thats wht why we cbt use it.
+        for(int j=1;j<=m;j++)prev[j]=0;
+        
+        for(int i=1;i<=n;i++){
+            for(int j=1;j<=m;j++){
+                if(s1[i-1]==s2[j-1])temp[j]= 1+prev[j-1];
+                else temp[j]= 0+max(prev[j],temp[j-1]);// ye else me rahega bottom up me 
+            }
+            prev=temp;
+        }
+        return prev[m];
+    }
+};
+

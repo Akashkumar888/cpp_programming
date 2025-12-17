@@ -45,3 +45,24 @@ class Solution {
     }
 };
 
+
+class Solution {
+  public:
+    vector<vector<int>> mergeOverlap(vector<vector<int>>& arr) {
+        // Code here
+        int n=arr.size();
+        vector<vector<int>>result;
+        // step -1
+        sort(arr.begin(),arr.end());
+        result.push_back(arr[0]);
+        // step 2
+        for(int i=1;i<n;i++){
+            if(result.back()[1]>=arr[i][0]){
+                result.back()[0]=min(result.back()[0],arr[i][0]);
+                result.back()[1]=max(result.back()[1],arr[i][1]);
+            }
+            else result.push_back(arr[i]);
+        }
+        return result;
+    }
+};
