@@ -20,6 +20,9 @@ public:
 // dp size increase [n+1][m+1] or [m+1][n+1]
 // return dp[i][j]= 0+max(solve(i-1,j,s1,s2,dp),solve(i,j-1,s1,s2,dp));  ye else me rahega bottom up ke code me 
 
+
+// insertions n-lcs
+// deletion m-lcs 
 class Solution {
 public:
   int solve(int i,int j,string &s1,string &s2,vector<vector<int>>&dp){

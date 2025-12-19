@@ -193,3 +193,74 @@ int solve(int i,string &pat,int j,string &txt,vector<vector<int>>&dp){
 // You access string characters using pat[i-1], txt[j-1] since strings remain 0-indexed.
 // You make recursion → DP conversion seamless and avoid invalid negative indices.
 // This approach makes transitions clean, especially for problems involving strings or subsequences.
+
+class Solution {
+public:
+    bool isMatch(string txt, string pat) {
+        int n=pat.size();
+        int m=txt.size();
+        vector<vector<int>>dp(n+1,vector<int>(m+1,false));
+        // Base cases
+        dp[0][0] = true;
+
+        // Pattern empty -> cannot match non-empty text
+        for (int j = 1; j <= m; j++)
+            dp[0][j] = false;
+
+        // Text empty -> only matches if pattern up to i is all '*'
+        for (int i = 1; i <= n; i++) {
+            bool allStar = true;
+            for (int k = i; k >= 1; k--) {
+                if (pat[k - 1] != '*') {
+                    allStar = false;
+                    break;
+                }
+            }
+            dp[i][0] = allStar;
+        }
+        for(int i=1;i<=n;i++){
+            for(int j=1;j<=m;j++){
+                if(pat[i-1]==txt[j-1] || pat[i-1]=='?') dp[i][j]=dp[i-1][j-1];
+                else if(pat[i-1]=='*')dp[i][j]= dp[i][j-1] | dp[i-1][j];
+                else dp[i][j]=false;
+            }
+        }
+        return dp[n][m];
+    }
+};
+
+class Solution {
+public:
+    bool isMatch(string txt, string pat) {
+        int n=pat.size();
+        int m=txt.size();
+        vector<bool>prev(m+1,false),temp(m+1,false);
+        // Base cases
+        prev[0] = true;
+
+        // Pattern empty -> cannot match non-empty text
+        for (int j = 1; j <= m; j++)
+            prev[j] = false;
+
+        for(int i=1;i<=n;i++){
+
+        // Text empty -> only matches if pattern up to i is all '*'
+            bool allStar = true;
+            for (int k = i; k >= 1; k--) {
+                if (pat[k - 1] != '*') {
+                    allStar = false;
+                    break;
+                }
+            }
+            temp[0] = allStar;// everytime first column 
+
+            for(int j=1;j<=m;j++){
+                if(pat[i-1]==txt[j-1] || pat[i-1]=='?') temp[j]=prev[j-1];
+                else if(pat[i-1]=='*')temp[j]= temp[j-1] | prev[j];
+                else temp[j]=false;
+            }
+            prev=temp;
+        }
+        return prev[m];
+    }
+};
