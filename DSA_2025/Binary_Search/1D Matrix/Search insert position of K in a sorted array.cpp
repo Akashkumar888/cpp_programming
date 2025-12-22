@@ -4,8 +4,8 @@ class Solution {
     int searchInsertK(vector<int> &arr, int k) {
         // code here
         int n=arr.size();
-        // lowerbound r me condition idx=mid r=mid-1
-        // upperbound l me condition idx=mid l=mid+1
+        // lowerbound r me condition arr[mid]>=k idx=mid r=mid-1
+        // upperbound l me condition arr[mid]<=k idx=mid l=mid+1
         int l=0,r=n-1;
         int idx=n;
         while(l<=r){
@@ -19,6 +19,17 @@ class Solution {
         return idx;
     }
 };
+// lower_bound logic:
+// if arr[mid] >= k → idx = mid, move r = mid - 1
+// else → move l = mid + 1
+
+// lower_bound logic:
+// if arr[mid] >= k → idx = mid, move r = mid - 1
+// else (arr[mid] < k) → move l = mid + 1
+
+// upper_bound logic:
+// if arr[mid] > k → idx = mid, move r = mid - 1
+// else → move l = mid + 1
 
 
 class Solution {
