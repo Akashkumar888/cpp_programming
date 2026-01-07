@@ -32,3 +32,65 @@ public:
     }
 };
 
+// ✅ Correct Thinking (Simple & Interview-Friendly)
+// We swap pairs directly using pointers:
+// Before: prev -> a -> b -> next
+// After : prev -> b -> a -> next
+// No value swap. Only pointer swap.
+
+
+class Solution {
+public:
+    ListNode* swapPairs(ListNode* head) {
+        if (!head || !head->next) return head;
+
+        ListNode* dummy = new ListNode(-1);
+        dummy->next = head;
+
+        ListNode* prev = dummy;
+
+        while (prev->next && prev->next->next) {
+            ListNode* a = prev->next;
+            ListNode* b = a->next;
+
+            // swap
+            a->next = b->next;
+            b->next = a;
+            prev->next = b;
+
+            // move prev
+            prev = a;
+        }
+
+        return dummy->next;
+    }
+};
+
+class Solution {
+public:
+    ListNode* swapPairs(ListNode* head) {
+        if (!head || !head->next) return head;
+
+        ListNode* dummy = new ListNode(-1);
+        dummy->next = head;
+
+        ListNode* prev = dummy;
+        ListNode* curr = head;
+
+        while (curr && curr->next) {
+            ListNode* a = curr;
+            ListNode* b = curr->next;
+
+            // swap
+            a->next = b->next;
+            b->next = a;
+            prev->next = b;
+
+            // move pointers
+            prev = a;
+            curr = a->next;
+        }
+
+        return dummy->next;
+    }
+};
