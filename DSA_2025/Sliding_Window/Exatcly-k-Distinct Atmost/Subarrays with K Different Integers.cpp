@@ -27,6 +27,32 @@ int atmost(vector<int>&nums,int k){
 };
 
 
+class Solution {
+public:
+int atmost(vector<int>&nums,int k){
+        int n=nums.size();
+        int i=0,j=0;
+        int count=0;
+        unordered_map<int,int>mp;
+        int distinct = 0;   // 🔥 key optimization
+        while(j<n){
+            if(mp[nums[j]] == 0)distinct++;
+            mp[nums[j]]++;
+            while(distinct>k){
+                mp[nums[i]]--;
+                if(mp[nums[i]] == 0)distinct--;
+                i++;
+            }
+             count+=(j-i+1); // subarray count it count no of distinct subarray upto j th index and also size of subarray
+            j++;
+        }
+        return count;
+}
+    int subarraysWithKDistinct(vector<int>& nums, int k) {
+        int exactly= atmost(nums,k) - atmost(nums,k-1);
+        return exactly;
+    }
+};
 
 
 
