@@ -42,3 +42,48 @@ class Solution {
 // Only a few variables (idx, total, gasSum, costSum).
 // No extra data structures used.
 // Space: O(1)
+
+class Solution {
+public:
+    int startStation(vector<int> &gas, vector<int> &cost) {
+        int n = gas.size();
+
+        // Total feasibility check
+        int totalGas = 0, totalCost = 0;
+        for (int i = 0; i < n; i++) {
+            totalGas += gas[i];
+            totalCost += cost[i];
+        }
+        if (totalGas < totalCost) return -1;
+
+        queue<int> q;
+        for (int i = 0; i < n; i++) q.push(i);
+
+        int fuel = 0;
+        int start = 0;
+        int visited = 0;
+
+        while (!q.empty()) {
+            int idx = q.front();
+            q.pop();
+
+            fuel += gas[idx] - cost[idx];
+
+            if (fuel < 0) {
+                // reset and try next station as start
+                fuel = 0;
+                visited = 0;
+                start = idx + 1;
+
+                while (!q.empty()) q.pop();
+                for (int i = start; i < n; i++) q.push(i);
+            } 
+            else {
+                visited++;
+                q.push(idx);
+                if (visited == n) return start;
+            }
+        }
+        return -1;
+    }
+};

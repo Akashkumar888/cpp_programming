@@ -1,3 +1,93 @@
+// 3️⃣ Condition variants
+// dq.front() <= i-k
+// // vs
+// i - dq.front() >= k
+
+// ✔ Both are 100% equivalent
+// ✔ Both correctly remove out-of-window indices
+
+
+class Solution {
+public:
+    vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+        // write code here
+        // sliding window ko slide krna hai one by one 
+        // deque pop_front for left index
+        // deque push_back for right index
+        int n=nums.size();
+        vector<int>result(n-k+1);//window
+        deque<int>dq;
+        for(int i=0;i<n;i++){
+            // Step 1 // Step 1: remove out-of-window indices
+            while(!dq.empty() && i - dq.front() >= k )dq.pop_front();
+            while(!dq.empty() && nums[i]> nums[dq.back()]) dq.pop_back(); // monotonic order me otherwise pop kr do 
+            // Step 2 // Step 2: add current index if negative
+            dq.push_back(i);
+             // Step 3: Store answer when window is ready
+            if (i - k + 1 >= 0) {
+                result[i-k+1]=(nums[dq.front()]);
+            }
+        }
+        return result;
+    }
+};
+
+
+
+class Solution {
+public:
+    vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+        int n=nums.size();
+        if(k==1) return nums;
+        deque<int>dq;
+        vector<int>ans;
+        for(int i=0;i<n;i++){
+            while(dq.size()!=0 && nums[dq.back()]<nums[i]) dq.pop_back();
+            dq.push_back(i);
+            int j=i-k+1;
+            while(dq.front()<j) dq.pop_front();
+            if(i>=k-1) ans.push_back(nums[dq.front()]);
+        }
+        return ans;
+    }
+};
+
+
+
+class Solution {
+public:
+    vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+        int n=nums.size();
+        vector<int>ans;
+        vector<int>ngi(n,0);
+        stack<int>st;
+        st.push(n-1);
+        ngi[n-1]=n;
+        for(int i=n-2;i>=0;i--){
+            while(st.size()>0 && nums[st.top()]<=nums[i]) {
+                st.pop();
+            }
+            if(st.size()==0) ngi[i]=n;
+            else ngi[i]=st.top();
+            st.push(i);
+        }
+        int j=0;
+        for(int i=0;i<n-k+1;i++){
+            if(j<i)j=i;
+            int mx=nums[j];
+            while(j<i+k){
+                mx=nums[j];
+                if(ngi[j]>=i+k) break;
+                j=ngi[j];
+            }
+            ans.push_back(mx);
+        }
+       return ans;
+    }
+};
+
+
+
 
 
 class Solution {

@@ -77,6 +77,34 @@ public:
     }
 };
 
+// 👉 map is the BEST choice for line sweep in MyCalendarTwo.
+// The vector<pair> version works in theory, but is fragile, slower, and risky in practice.
+class Solution {
+public:
+    int maximumPopulation(vector<vector<int>>& logs) {
+        // line sweep algorithm
+        // step - 1 
+        map<int,int>events;
+        for(auto &log:logs){
+            events[log[0]]++;
+            events[log[1]]--;
+        }
+       
+
+       // step - 3
+        int minYear=2050;
+        int maxPop=0;
+        int currPop=0;
+        for(auto &it:events){
+            currPop+=it.second;
+            if(currPop>maxPop){
+                maxPop=currPop;
+                minYear=it.first;
+            }
+        }
+        return minYear;
+    }
+};
 
 
 // Why This is Powerful

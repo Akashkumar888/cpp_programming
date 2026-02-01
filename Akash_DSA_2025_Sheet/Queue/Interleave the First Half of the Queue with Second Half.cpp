@@ -21,6 +21,30 @@ class Solution {
     }
 };
 
+
+class Solution {
+  public:
+    void rearrangeQueue(queue<int> &q) {
+        // code here
+        int n=q.size();
+        if(n<=2)return;
+        int mid=n/2;
+        queue<int>firstHalf;
+        while(q.size()>mid){
+            firstHalf.push(q.front());
+            q.pop();
+        }
+        while(!firstHalf.empty()){
+            q.push(firstHalf.front());
+            firstHalf.pop();
+            q.push(q.front());
+            q.pop();
+        }
+    }
+};
+
+
+
 class Solution {
 public:
     void rearrangeQueue(queue<int> &q) {
@@ -46,6 +70,7 @@ public:
         }
     }
 };
+
 
 
 class Solution {

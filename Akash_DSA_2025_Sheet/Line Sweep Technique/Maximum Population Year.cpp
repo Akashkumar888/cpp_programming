@@ -27,3 +27,30 @@ public:
     }
 };
 
+
+class Solution {
+public:
+    int maximumPopulation(vector<vector<int>>& logs) {
+        // line sweep algorithm
+        // step - 1 
+        map<int,int>events;
+        for(auto &log:logs){
+            events[log[0]]++;
+            events[log[1]]--;
+        }
+       
+       // step - 2
+        int minYear=2050;
+        int maxPop=0;
+        int currPop=0;
+        for(auto &it :events){
+            currPop+=it.second;
+            if(currPop>maxPop){
+                maxPop=currPop;
+                minYear=it.first;
+            }
+        }
+        return minYear;
+    }
+};
+

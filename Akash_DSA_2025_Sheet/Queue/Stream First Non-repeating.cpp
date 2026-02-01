@@ -1,3 +1,36 @@
+class Solution {
+  public:
+    string firstNonRepeating(string &s) {
+        int n = s.size();
+        vector<int> freq(26, 0);   // frequency of characters
+        queue<char> q;             // maintains stream order
+        string ans = "";
+
+        for (int i = 0; i < n; i++) {
+            char ch = s[i];
+
+            // increase frequency
+            freq[ch - 'a']++;
+
+            // push character into queue
+            q.push(ch);
+
+            // remove repeating characters from front
+            while (!q.empty() && freq[q.front() - 'a'] > 1) {
+                q.pop();
+            }
+
+            // store answer for current prefix
+            if (q.empty())ans.push_back('#');
+            else ans.push_back(q.front());
+        }
+        return ans;
+    }
+};
+
+
+
+
 #include <iostream>
 #include <string>
 #include <vector>

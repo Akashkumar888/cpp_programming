@@ -26,7 +26,30 @@ class Solution {
     }
 };
 
-
+class Solution {
+  public:
+    int minMeetingRooms(vector<int> &start, vector<int> &end) {
+        // code here
+        // line sweep algorithm
+        int n=start.size();
+        // step - 1 
+        map<int,int>events;
+        for(int i=0;i<n;i++){
+            events[start[i]]++;
+            events[end[i]]++;
+        }
+       // step - 2
+        int maxRooms=0;
+        int currRooms=0;
+        for(auto &it:events){
+            currRooms+=it.second;
+            if(currRooms>maxRooms){
+                maxRooms=currRooms;
+            }
+        }
+        return maxRooms;
+    }
+};
 
 
 // 🔹 Approach 1: Two Pointer (same logic as Java, in C++)
