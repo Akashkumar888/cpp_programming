@@ -39,7 +39,41 @@ public:
     }
 };
 
-
+class Solution {
+  public:
+  // Standard Kadane’s: maximum subarray sum (non-circular case)
+  int maxPositiveSum(vector<int>&arr){
+      int maxSum=INT_MIN;
+      int sum=0;
+      for(int &num:arr){
+          sum+=num;
+          maxSum=max(maxSum,sum);
+          if(sum<0)sum=0;
+      }
+      return maxSum;
+  }
+   // Inverse Kadane’s: minimum subarray sum (non-circular case)
+  int minNegativeSum(vector<int>&arr){
+      int minSum=INT_MAX;
+      int sum=0;
+      for(int &num:arr){
+          sum+=num;
+          minSum=min(minSum,sum);
+          if(sum>0)sum=0;
+      }
+      return minSum;
+  }
+    int maxCircularSum(vector<int> &arr) {
+        // code here
+        int totalSum=accumulate(arr.begin(),arr.end(),0);
+        int maxSum=maxPositiveSum(arr);
+        int minSum=minNegativeSum(arr);
+        // Edge case: all numbers are negative → just return maxNormal
+        if (totalSum == minSum) return maxSum;
+        // Either take normal Kadane or wrap-around case
+        return max(maxSum,totalSum-minSum);
+    }
+};
 
 
 

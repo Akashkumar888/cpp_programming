@@ -1,4 +1,3 @@
-
 class kQueues {
   public:
     int n, k;
@@ -19,9 +18,8 @@ class kQueues {
         next.resize(n);
 
         // initialize free list
-        for (int i = 0; i < n - 1; i++) {
-            next[i] = i + 1;
-        }
+        for (int i = 0; i < n - 1; i++)next[i] = i + 1;
+        
         next[n - 1] = -1;
 
         freeSpot = 0;
@@ -37,7 +35,8 @@ class kQueues {
         // first element in queue i
         if (front[i] == -1) {
             front[i] = index;
-        } else {
+        } 
+        else {
             next[rear[i]] = index;
         }
 
@@ -54,8 +53,7 @@ class kQueues {
         front[i] = next[index];
 
         // if queue becomes empty
-        if (front[i] == -1)
-            rear[i] = -1;
+        if (front[i] == -1) rear[i] = -1;
 
         // add index back to free list
         next[index] = freeSpot;
