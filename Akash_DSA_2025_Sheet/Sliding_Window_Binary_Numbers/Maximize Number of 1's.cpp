@@ -28,3 +28,23 @@ class Solution {
 // Time: O(n)
 // Space: O(1)
 
+class Solution {
+  public:
+    int maxOnes(vector<int>& arr, int k) {
+        // code here
+        int n=arr.size();
+        int i=0,j=0;
+        int cntZero=0;
+        int maxLen=0;
+        while(j<n){
+            if(arr[j]==0)cntZero++;
+            while(cntZero>k){
+                if(arr[i]==0) cntZero--;
+                i++;
+            }
+            maxLen=max(maxLen,j-i+1);
+            j++;
+        }
+        return maxLen;
+    }
+};

@@ -1,5 +1,40 @@
 
 class Solution {
+public:
+// Function that takes last element as pivot, places the pivot element at
+    // its correct position in sorted array, and places all smaller elements
+    // to left of pivot and all greater elements to right of pivot.
+    int partition(vector<int>& nums, int start, int end) {
+        // code here
+        int pivotElement=nums[end];
+        int pos=start;
+        for(int i=start;i<end;i++){
+              if(nums[i]<=pivotElement){
+               swap(nums[pos],nums[i]);
+                 pos++;
+                }
+               }
+            swap(nums[pos],nums[end]);
+            return pos;
+    }
+        // Function to sort an array using quick sort algorithm.
+     void quickSort(vector<int>& nums, int start, int end) {
+        // code here
+        if(start>=end)return;
+        int pivotIdx=partition(nums,start,end);
+        quickSort(nums,start,pivotIdx-1);// smaller part left side 
+        quickSort(nums,pivotIdx+1,end);// larger part right side
+    }
+    vector<int> sortArray(vector<int>& nums) {
+       int n=nums.size();
+       quickSort(nums,0,n-1);
+       return nums;   
+    }
+};
+
+
+
+class Solution {
   public:
     // Function to sort an array using quick sort algorithm.
      void quickSort(vector<int>& nums, int start, int end) {
@@ -155,5 +190,42 @@ class Solution
        }
        swap(arr[pi],arr[high]);
        return pi;
+    }
+};
+
+
+class Solution {
+public:
+    int partition(vector<int>& nums, int low, int high) {
+        int pivot = nums[high];
+        int i = low;
+
+        for (int j = low; j < high; j++) {
+            if (nums[j] <= pivot) {
+                swap(nums[i], nums[j]);
+                i++;
+            }
+        }
+        swap(nums[i], nums[high]);
+        return i;
+    }
+
+    void quickSort(vector<int>& nums, int low, int high) {
+        if (low >= high) return;
+
+        // Randomized pivot to avoid worst case
+        int randomIndex = low + rand() % (high - low + 1);
+        swap(nums[randomIndex], nums[high]);
+
+        int pivotIndex = partition(nums, low, high);
+
+        quickSort(nums, low, pivotIndex - 1);
+        quickSort(nums, pivotIndex + 1, high);
+    }
+
+    vector<int> sortArray(vector<int>& nums) {
+        srand(time(0));   // Seed randomness
+        quickSort(nums, 0, nums.size() - 1);
+        return nums;
     }
 };

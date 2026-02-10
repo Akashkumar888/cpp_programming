@@ -1,3 +1,20 @@
+class Solution {
+public:
+    int removeElement(vector<int>& nums, int val) {
+        int n = nums.size();
+        int i = 0;  // fast pointer
+        int j = 0;  // position to place valid element
+
+        while (i < n) {
+            if (nums[i] != val) {
+                nums[j] = nums[i];
+                j++;
+            }
+            i++;
+        }
+        return j;
+    }
+};
 
 class Solution {
 public:
@@ -13,6 +30,7 @@ public:
         return k;
     }
 };
+
 
 
 

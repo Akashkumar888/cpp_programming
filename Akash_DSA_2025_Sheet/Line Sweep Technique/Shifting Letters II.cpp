@@ -1,9 +1,11 @@
 
 result[i] = 'a' + (s[i] - 'a' + 1) % 26;// forward
 result[i] = 'a' + (s[i] - 'a' - 1 + 26) % 26;// backward
+int shift = ((curShift % 26) + 26) % 26; // normalize
 
-
-
+// 1️⃣ Difference Array (array-based line sweep) ✅ optimal
+// 2️⃣ Event Map (map-based line sweep) ❌ slower but conceptually clean
+// Both are line sweep algorithms.
 
 class Solution {
 public:
