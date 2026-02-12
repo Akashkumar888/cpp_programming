@@ -112,3 +112,14 @@ class Solution {
         return minHours;
     }
 };
+
+// Quick Memory Rule
+// If the problem says:
+// “Minimum speed”
+// l = 1
+// r = max(array)
+
+
+// “Minimum capacity / load”
+// l = max(array)
+// r = sum(array)

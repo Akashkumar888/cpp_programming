@@ -1,4 +1,145 @@
 
+// User function Template for C++
+
+class Solution {
+  public:
+  void dfs(int u,vector<int>&visited,vector<int>graph[]){
+      if(visited[u])return;
+      visited[u]=true;
+      for(auto &ngbr :graph[u]){
+        if(!visited[ngbr]) dfs(ngbr,visited,graph);
+      }
+  }
+    int numProvinces(vector<vector<int>> adj, int V) {
+        // code here
+        vector<int>graph[V];
+        int m=adj.size();
+        int n=adj[0].size();
+        vector<int>visited(V,false);
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(adj[i][j]){
+                    graph[i].push_back(j);
+                    graph[j].push_back(i);
+                }
+            }
+        }
+        int count=0;
+        for(int i=0;i<V;i++){
+            if(!visited[i]){
+                dfs(i,visited,graph);
+                count++;
+            }
+        }
+        return count;
+    }
+};
+
+
+// User function Template for C++
+
+class Solution {
+  public:
+  void bfs(int u,vector<int>&visited,vector<int>graph[]){
+    queue<int>q;
+    q.push(u);
+    visited[u]=true;
+    while(!q.empty()){
+        int node=q.front();
+        q.pop();
+        for(auto &ngbr:graph[node]){
+            if(!visited[ngbr]){
+                q.push(ngbr);
+                visited[ngbr]=true;
+            }
+        }
+    }
+  }
+    int numProvinces(vector<vector<int>> adj, int V) {
+        // code here
+        vector<int>graph[V];
+        int m=adj.size();
+        int n=adj[0].size();
+        vector<int>visited(V,false);
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(adj[i][j]){
+                    graph[i].push_back(j);
+                    graph[j].push_back(i);
+                }
+            }
+        }
+        int count=0;
+        for(int i=0;i<V;i++){
+            if(!visited[i]){
+                bfs(i,visited,graph);
+                count++;
+            }
+        }
+        return count;
+    }
+};
+
+// User function Template for C++
+
+class Solution {
+  public:
+  void dfs(int V,int u,vector<int>&visited,vector<vector<int>>&adj){
+    if(visited[u])return;
+      visited[u]=true;
+      for(int ngbr=0;ngbr<V;ngbr++){
+         if(!visited[ngbr] && adj[u][ngbr]==1 )dfs(V,ngbr,visited,adj);
+      }
+  }
+    int numProvinces(vector<vector<int>> adj, int V) {
+        // code here
+        vector<int>visited(V,false);
+        int count=0;
+        for(int i=0;i<V;i++){
+            if(!visited[i]){
+                dfs(V,i,visited,adj);
+                count++;
+            }
+        }
+        return count;
+    }
+};
+
+
+// User function Template for C++
+
+class Solution {
+  public:
+  void bfs(int V,int u,vector<int>&visited,vector<vector<int>>&adj){
+    queue<int>q;
+    q.push(u);
+    visited[u]=true;
+    while(!q.empty()){
+        int node=q.front();
+        q.pop();
+        for(int ngbr=0;ngbr<V;ngbr++){
+            if(!visited[ngbr] && adj[node][ngbr]==1){
+                q.push(ngbr);
+                visited[ngbr]=true;
+            }
+        }
+    }
+  }
+    int numProvinces(vector<vector<int>> adj, int V) {
+        // code here
+        vector<int>visited(V,false);
+        int count=0;
+        for(int i=0;i<V;i++){
+            if(!visited[i]){
+                bfs(V,i,visited,adj);
+                count++;
+            }
+        }
+        return count;
+    }
+};
+
+
 class Solution {
 public:
 void dfs(int u,vector<bool>&visited,unordered_map<int,vector<int>>&adj){
