@@ -204,3 +204,64 @@ class Solution {
           return result;
     }
 };
+
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+  ListNode* reverseList(ListNode*head){
+      ListNode*prev=NULL;
+      ListNode*curr=head;
+      while(curr){
+          ListNode*nextNode=curr->next;
+          curr->next=prev;
+          prev=curr;
+          curr=nextNode;
+      }
+      return prev;
+  }
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        ListNode*first=reverseList(l1);
+        ListNode*second=reverseList(l2);
+        ListNode*temp1=first;
+        ListNode*temp2=second;
+        int carry=0;
+        ListNode*dummy=new ListNode(-1);
+        ListNode*newHead=dummy;
+        while(temp1 || temp2 ||carry){
+           int sum=carry;
+            if(temp1){
+                sum+=temp1->val;
+                temp1=temp1->next;
+            }
+            if(temp2){
+                sum+=temp2->val;
+                temp2=temp2->next;
+            }
+            newHead->next=new ListNode(sum%10);
+            newHead=newHead->next;
+            carry=sum/10;
+        }
+        ListNode* result = reverseList(dummy->next);
+        //There can be leading zeros in the input lists, but there should not be any leading zeros in the output list.
+          // 🔥 REMOVE LEADING ZEROS
+          while (result && result->val == 0) {
+              result = result->next;
+          }
+    
+          // edge case: result is all zeros
+          if (result == NULL) {
+              return new ListNode(0);
+          }
+          return result;
+    }
+};

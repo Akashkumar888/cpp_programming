@@ -24,26 +24,52 @@
 // Traffic / event simulations
 
 // It works by converting ranges into events and then “sweeping” a virtual line from left to right while updating a running state.
-
 // The Delta concept is used to mark:
-
 // +1 → start of an interval
-
 // -1 → end of an interval
-
 // Instead of processing each range fully, we just store changes at boundaries.
-
 // Example Problem
-
 // Given intervals:
-
 // [1, 5], [2, 6], [4, 8]
 
 
+// 🔥 RULE 1 — If interval is [start, end] (inclusive)
+// Meaning:
+// It includes end.
+// Then use:
+// events[start] += 1;
+// events[end + 1] -= 1;
 
+// Because the interval stops AFTER end.
+// Example:
+// Interval = [1,5]
+// Active at:
+// 1 2 3 4 5
+
+// So at index 6 it should stop.
+// Hence:
+// +1 at 1
+// -1 at 6
+
+// ✅ That’s why end+1
+// 🔥 RULE 2 — If interval is [start, end) (half-open)
+// Meaning:
+// Includes start
+// Excludes end
+// Then use:
+// events[start] += 1;
+// events[end] -= 1;
+
+// Because it already stops at end.
+// 🧠 Why Some Use end+1 Trick?
+// Because sometimes:
+// Problem states inclusive intervals
+// Or you convert inclusive to half-open
+// You convert:
+// [start, end]  →  [start, end+1)
+// So that you can use standard half-open logic.
 
 // Find the maximum number of overlapping intervals.
-
 
 #include <bits/stdc++.h>
 using namespace std;

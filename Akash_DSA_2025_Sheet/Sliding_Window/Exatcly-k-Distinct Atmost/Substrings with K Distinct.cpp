@@ -97,3 +97,47 @@ class Solution {
         return exactly;
     }
 };
+
+
+// 🔥 1️⃣ AT MOST K (Most Important Base Pattern)
+// This is the foundation.
+// 🔑 Logic:
+// Maintain window such that:
+// condition <= k
+// When condition breaks → shrink from left.
+
+// 🔥 2️⃣ EXACTLY K
+// Golden Trick:
+// Exactly K = AtMost(K) - AtMost(K-1)
+// Very important formula 🔥
+// Why?
+// AtMost(K) counts subarrays with ≤ K
+// AtMost(K-1) counts subarrays with ≤ K-1
+// Subtract → gives exactly K
+// Example:
+// Count subarrays with exactly K distinct numbers.
+// return atMostK(k) - atMostK(k-1);
+// Simple and powerful.
+
+// 🔥 3️⃣ AT LEAST K
+// Another golden trick:
+// AtLeast(K) = TotalSubarrays - AtMost(K-1)
+// Because:
+// Total = AtMost(K-1) + AtLeast(K)
+// So:
+// AtLeast(K) = Total - AtMost(K-1)
+// Total subarrays:
+// n * (n+1) / 2
+
+
+// 🎯 Recognition Shortcut
+// If question says:
+// Count subarrays
+// Exactly K
+// At least K
+// Distinct / sum / odd / max / product condition
+// Immediately think:
+
+// AtMost template
+// Exactly = AtMost(K) - AtMost(K-1)
+// AtLeast = Total - AtMost(K-1)
