@@ -5,7 +5,7 @@ public:
     vector<int> size;
     vector<int> rank;
 
-    DSU(int n) { // contructor in used for initiallization not declaration 
+    DSU(int n) { // contructor in used for data members initiallization not declaration 
         parent.resize(n);
         size.resize(n, 1);
         rank.resize(n, 0);

@@ -34,3 +34,71 @@ class Solution {
         return minPages;
     }
 };
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+bool isPossible(vector<int>& arr, int n, int W, int mid) {
+    int sum = 0;
+    int count = 1;
+
+    for(int i = 0; i < n; i++) {
+
+        if(arr[i] > mid)
+            return false;
+
+        if(sum + arr[i] > mid) {
+            count++;
+            sum = arr[i];
+
+            if(count > W)
+                return false;
+        }
+        else {
+            sum += arr[i];
+        }
+    }
+
+    return true;
+}
+
+int user_logic(int n, vector<int> tasks, int W) {
+
+    if(W > n) return -1;
+
+    int l = *max_element(tasks.begin(), tasks.end());
+    int r = accumulate(tasks.begin(), tasks.end(), 0);
+    int ans = r;
+
+    while(l <= r) {
+        int mid = l + (r - l) / 2;
+
+        if(isPossible(tasks, n, W, mid)) {
+            ans = mid;
+            r = mid - 1;   // minimize maximum
+        }
+        else {
+            l = mid + 1;
+        }
+    }
+
+    return ans;
+}
+
+
+int main() {
+    int n;
+    std::cin >> n;  // First input is the integer n
+    std::vector<int> tasks(n);
+    for (int i = 0; i < n; i++) {
+        std::cin >> tasks[i];  // Next n inputs are the tasks array
+    }
+    int W;
+    std::cin >> W;  // The last input is the number of workers
+
+    // Call user logic function and print the output
+    int result = user_logic(n, tasks, W);
+    std::cout << result << std::endl;
+    return 0;
+}

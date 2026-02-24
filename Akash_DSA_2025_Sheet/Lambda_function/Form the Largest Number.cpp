@@ -34,3 +34,63 @@ auto lambda = [&](const string &s1, const string &s2){
 // In short for your example:
 // Sort (lambda) → s1 and s2 are just two elements being compared; not necessarily beginning or end.
 // Heap (cmp) → p1 and p2 are elements being compared internally by the heap; p1 is not necessarily bottom, p2 is not necessarily top. The heap ensures pq.top() is the element with highest priority according to your comparator.
+
+class Solution {
+  public:
+    string findLargest(vector<int> &arr) {
+        // code here
+        // comparator or lambda function 
+        auto cmp=[&](const string &s1,const string &s2){
+            return s1+s2>s2+s1;
+        };
+        
+        vector<string>result;
+        for(int &num:arr){
+            result.push_back(to_string(num));
+        }
+        sort(result.begin(),result.end(),cmp);
+        string finalAns="";
+        for(string &str:result){
+            finalAns+=str;
+        }
+        // remove leading zeros from finalAns 
+        int i=0;// only one leading zero present 
+        while(i<finalAns.size()-1 && finalAns[i]=='0')i++;
+        return finalAns.substr(i);
+    }
+};
+
+// "9"+"34"  = 934
+// "34"+"9"  = 349
+// Since 934 > 349 → 9 should come before 34.
+// ✔ Perfect logic.
+
+
+class Solution {
+public:
+    string findLargest(vector<int> &arr) {
+
+        // Step 1: Convert numbers to strings
+        vector<string> nums;
+        for (int num : arr) {
+            nums.push_back(to_string(num));
+        }
+
+        // Step 2: Custom comparator
+        sort(nums.begin(), nums.end(), [](const string &a, const string &b) {
+            return a + b > b + a;
+        });
+
+        // Step 3: If largest element is "0", return "0"
+        if (nums[0] == "0")
+            return "0";
+
+        // Step 4: Concatenate
+        string result = "";
+        for (string &s : nums) {
+            result += s;
+        }
+
+        return result;
+    }
+};
