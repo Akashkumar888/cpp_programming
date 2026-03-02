@@ -32,7 +32,7 @@ class Solution {
     }
 };
 
-
+// 2D Difference Array is a technique to apply rectangle updates in O(1) time per operation and finalize using one prefix sum pass.
 
 
 
