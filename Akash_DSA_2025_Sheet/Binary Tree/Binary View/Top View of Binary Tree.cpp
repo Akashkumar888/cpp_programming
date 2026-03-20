@@ -1,3 +1,52 @@
+/*
+class Node {
+  public:
+    int data;
+    Node* left;
+    Node* right;
+
+    Node(int val) {
+        data = val;
+        left = nullptr;
+        right = nullptr;
+    }
+};
+*/
+class Solution {
+  public:
+  void bfs(Node*root,map<int,int>&mp){
+      if(root==NULL)return ;
+      // map keeps keys in ascending order so we can output left->right
+      // hd -> node->data (not overwritten)
+       queue<pair<Node*,int>>q; // node, horizontal distance
+       q.push({root,0});// horizontal distance start from 0 and level wise traverse using bfs
+       while(!q.empty()){
+           int n=q.size();
+           for(int i=0;i<n;i++){
+               Node* curr=q.front().first;
+               int hr=q.front().second;
+               q.pop();
+               if(mp.find(hr)==mp.end()) mp[hr]=curr->data; // not overwrite: later (lower)does not nodes replace earlier ones
+               if(curr->left)q.push({curr->left,hr-1});// left me hr-1
+               if(curr->right)q.push({curr->right,hr+1});// right me hr+1
+           }
+       }
+  }
+    vector<int> topView(Node *root) {
+        // code here
+        // Return the nodes from the leftmost node to the rightmost node.
+        // If multiple nodes overlap at the same horizontal position, only the topmost 
+        //(closest to the root) node is included in the view. 
+        vector<int>result;
+        map<int,int>mp;// it is ordered map key-value store in ascending order 
+        bfs(root,mp);
+        for(auto &it:mp){
+          result.push_back(it.second);
+      }
+        return result;
+    }
+};
+
 
 /*
 class Node {

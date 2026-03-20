@@ -50,3 +50,48 @@ class Solution {
         return result;
     }
 };
+
+/*
+class Node {
+  public:
+    int data;
+    Node* left;
+    Node* right;
+
+    Node(int val) {
+        data = val;
+        left = NULL;
+        right = NULL;
+    }
+};
+*/
+
+class Solution {
+  public:
+  void bfs(Node*root,map<int,vector<int>>&mp){
+      if(root==NULL)return;
+      queue<pair<Node*,int>>q;
+      q.push({root,0});// start horizontal distance with 0
+      while(!q.empty()){
+          int n=q.size();
+          for(int i=0;i<n;i++){
+              Node*curr=q.front().first;
+              int hd=q.front().second;
+              q.pop();
+              mp[hd].push_back(curr->data);
+              if(curr->left)q.push({curr->left,hd-1});
+              if(curr->right)q.push({curr->right,hd+1});
+          }
+      }
+  }
+    vector<vector<int>> verticalOrder(Node *root) {
+        // code here
+        vector<vector<int>>result;
+        map<int,vector<int>>mp;
+        bfs(root,mp);
+        for(auto &it:mp){
+            result.push_back(it.second);
+        }
+        return result;
+    }
+};

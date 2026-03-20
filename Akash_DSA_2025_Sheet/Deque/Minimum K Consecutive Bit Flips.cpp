@@ -1,3 +1,128 @@
+class Solution {
+public:
+    int kBitFlips(vector<int>& arr, int k) {
+        int n = arr.size();
+        int flips = 0;
+        int flipsfori = 0;
+        deque<int> dq;
+
+        for(int i = 0; i < n; i++) {
+
+            if(i >= k) {
+                flipsfori -= dq.front();
+                dq.pop_front();
+            }
+
+            if(flipsfori % 2 == arr[i]) {
+                if(i + k > n) return -1;
+
+                flipsfori++;
+                flips++;
+                dq.push_back(1);
+            }
+            else {
+                dq.push_back(0);
+            }
+        }
+
+        return flips;
+    }
+};
+
+
+class Solution {
+public:
+    int kBitFlips(vector<int>& nums, int k) {
+
+        int n = nums.size();
+        int times = 0;
+        int ans = 0;
+
+        vector<int> flipped(n, 0);
+
+        for(int i = 0; i < n; i++) {
+
+            if(i - k >= 0) {
+                times -= flipped[i-k];
+            }
+
+            if((nums[i] == 1 && times % 2 == 1) || 
+               (nums[i] == 0 && times % 2 == 0)) {
+
+                if(i + k > n) return -1;
+
+                times++;
+                ans++;
+                flipped[i] = 1;
+            }
+        }
+
+        return ans;
+    }
+};
+class Solution {
+public:
+    int kBitFlips(vector<int>& nums, int k) {
+
+        int n = nums.size();
+        int times = 0;
+        int ans = 0;
+
+        queue<int> q;
+
+        for(int i = 0; i < n; i++) {
+
+            if(i - k >= 0 && !q.empty()) {
+                times -= q.front();
+                q.pop();
+            }
+
+            if((nums[i] == 1 && times % 2 == 1) ||
+               (nums[i] == 0 && times % 2 == 0)) {
+
+                if(i + k > n) return -1;
+
+                times++;
+                ans++;
+                q.push(1);
+            }
+            else {
+                q.push(0);
+            }
+        }
+
+        return ans;
+    }
+};
+
+class Solution {
+public:
+    int kBitFlips(vector<int>& nums, int k) {
+
+        int n = nums.size();
+        int flips = 0;
+        int ans = 0;
+
+        for(int i = 0; i < n; i++) {
+
+            if(i >= k && nums[i-k] == 2)
+                flips--;
+
+            if(flips % 2 == nums[i]) {
+
+                if(i + k > n)
+                    return -1;
+
+                ans++;
+                flips++;
+                nums[i] = 2;
+            }
+        }
+
+        return ans;
+    }
+};
+
 
 class Solution {
   public:
