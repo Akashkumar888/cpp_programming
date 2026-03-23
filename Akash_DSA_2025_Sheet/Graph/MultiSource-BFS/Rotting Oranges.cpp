@@ -355,3 +355,49 @@ vector<vector<int>>directions={{1,0},{0,1},{0,-1},{-1,0}};
     }
 };
 
+class Solution {
+  public:
+  int dx[4]={1,0,-1,0};
+  int dy[4]={0,1,0,-1};
+  typedef pair<int,pair<int,int>>P;
+    int orangesRot(vector<vector<int>>& mat) {
+        // code here
+        int count=0;
+        int m=mat.size();
+        int n=mat[0].size();
+        queue<P>q;
+        vector<vector<bool>>visited(m,vector<bool>(n,false));
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(mat[i][j]==2){
+                    q.push({0,{i,j}});// muti-souce bfs
+                    visited[i][j]=true;
+                }
+            }
+        }
+        // muti-souce bfs
+        int maxTime=0;
+        while(!q.empty()){
+            int tm=q.front().first;
+            int x=q.front().second.first;
+            int y=q.front().second.second;
+            q.pop();
+            maxTime=max(maxTime,tm);
+            for(int k=0;k<4;k++){
+                int nx=x+dx[k];
+                int ny=y+dy[k];
+                if(nx>=0 && nx<m && ny>=0 && ny<n && !visited[nx][ny] && mat[nx][ny]!=0){
+                    q.push({tm+1,{nx,ny}});
+                    visited[nx][ny]=true;
+                    count++;
+                }
+            }
+        }
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(!visited[i][j] && mat[i][j]==1)return -1;
+            }
+        }
+        return maxTime;
+    }
+};

@@ -1,4 +1,68 @@
 
+
+// bfs ke two template 
+// 🔥 BFS Templates — When to Use Which?
+
+// There are mainly 3 practical BFS patterns used in industry + DSA:
+
+// ✅ 1️⃣ Normal BFS (Single Loop Template)
+// while(!q.empty()){
+//     auto node = q.front();
+//     q.pop();
+// }
+
+// 📌 When to use?
+// When you don’t care about levels
+// When you just need:
+// Traversal
+// Reachability
+// Visited marking
+// 🔹 Example Problems:
+// Graph traversal
+// Connected components
+// Checking cycle in undirected graph
+// Flood fill (without time tracking)
+
+// ✅ 2️⃣ Level Order BFS (Two Loop Template)
+// while(!q.empty()){
+//     int sz = q.size();
+//     for(int i=0;i<sz;i++){
+//         auto node = q.front();
+//         q.pop();
+//     }
+// }
+// 📌 When to use?
+// When level matters.
+// 👉 Each loop = 1 level = 1 minute / 1 distance step
+// 🔥 Use this when:
+// You need minimum distance
+// You need time taken
+// You need multi-source BFS
+// Binary tree level order traversal
+// 🔹 Example Problems:
+// Rotting Oranges 🍊
+// Word Ladder
+// Shortest Path in Unweighted Graph
+// Binary Tree Level Order
+
+// ✅ 3️⃣ BFS with Time Stored in Queue
+// queue<pair<pair<int,int>,int>> q; 
+// // {{i,j}, time}
+// 📌 When to use?
+// When:
+// Time per node can differ
+// You don’t want level loop
+// Cleaner implementation
+// This avoids:
+// int sz = q.size();
+// Instead you push:
+// q.push({{ni,nj}, t+1});
+// 🔥 Used in:
+// Grid problems
+// Spread problems
+// Shortest path with equal weight edges
+
+
 /**
  * Definition for a binary tree node.
  * struct TreeNode {
@@ -8,6 +72,7 @@
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
+
 class Solution {
 public:
 // minimum time required to burn the entire tree -> use bfs 
@@ -110,6 +175,57 @@ void makegraph(TreeNode*root,unordered_map<TreeNode*,vector<TreeNode*>>&adj){
             k--;
         }
         return ans;
+    }
+};
+
+
+
+class Solution {
+public:
+// minimum time required to burn the entire tree -> use bfs 
+// every graph is a tree but every tree is not graph
+// tree is directed graph from parent to child
+// here we need to undirected graph that's why convert tree to undirected graph 
+void buildGraph(TreeNode*root,unordered_map<int,vector<int>>&graph){
+    if(root==NULL)return ;
+    if(root->left){
+       graph[root->val].push_back(root->left->val);
+       graph[root->left->val].push_back(root->val);
+       buildGraph(root->left,graph); 
+    }
+    if(root->right){
+       graph[root->val].push_back(root->right->val);
+       graph[root->right->val].push_back(root->val);
+       buildGraph(root->right,graph);
+    }
+}
+void bfs(unordered_map<int,vector<int>>&graph,TreeNode* target,vector<int>&result,int k){
+    typedef pair<int,int>P;
+    queue<P>q;
+    unordered_set<int>visited;
+    int maxTime = 0;
+    q.push({0,target->val});//All the values Node.val are unique.
+    visited.insert(target->val);
+    while(!q.empty()){
+        int tm=q.front().first;
+        int curr=q.front().second;
+        q.pop();
+        maxTime=max(maxTime,tm);
+        if(maxTime==k)result.push_back(curr);
+            for(auto &ngbr:graph[curr]){
+            if(visited.find(ngbr)==visited.end()){
+                q.push({tm+1,ngbr});
+                visited.insert(ngbr);
+            }
+    }
+    }
+}
+    vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
+        unordered_map<int,vector<int>>graph;
+        vector<int>result;
+        buildGraph(root,graph);
+        bfs(graph,target,result,k);
+        return result;
     }
 };
 

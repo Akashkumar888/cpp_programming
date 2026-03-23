@@ -107,6 +107,54 @@ public:
     }
 };
 
+
+class Solution {
+public:
+    int findShortestCycle(int V, vector<vector<int>>& edges) {
+        vector<int> adj[V];
+
+        for (auto &edge : edges) {
+          int u=edge[0];
+          int v=edge[1];
+            adj[u].push_back(v);
+            adj[v].push_back(u);
+        }
+
+        int minLen = INT_MAX;
+
+        for (int i = 0; i < V; i++) {
+
+            vector<int> dist(V, -1);
+            vector<int> parent(V, -1);
+
+            queue<int> q;
+            q.push(i);
+            dist[i] = 0;
+
+            while (!q.empty()) {
+
+                int node = q.front(); 
+                q.pop();
+
+                for (auto &ngbr : adj[node]) {
+
+                    if (dist[ngbr] == -1) {
+                        dist[ngbr] = dist[node] + 1;
+                        parent[ngbr] = node;
+                        q.push(ngbr);
+                    }
+                    else if (parent[node] != ngbr) {
+                        int cycleLen = dist[node] + dist[ngbr] + 1;
+                        minLen = min(minLen, cycleLen);
+                    }
+                }
+            }
+        }
+        return minLen==INT_MAX?-1:minLen;
+    }
+};
+
+
 class Solution {
 public:
     int bfs(int u,unordered_map<int,vector<int>>&adj) {
@@ -149,3 +197,5 @@ public:
         return (minlen == INT_MAX) ? -1 : minlen;
     }
 };
+
+
