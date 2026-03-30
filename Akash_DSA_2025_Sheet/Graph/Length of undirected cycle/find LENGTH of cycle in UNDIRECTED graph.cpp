@@ -106,20 +106,11 @@ public:
 // ✅ 2️⃣ DFS + Adjacency List
 class Solution {
 public:
-
     int maxLen = -1;
-
-    void dfs(int u, int parent,
-             vector<int>& depth,
-             vector<bool>& visited,
-             vector<int> adj[]) {
-
+    void dfs(int u, int parent,vector<int>& depth,vector<bool>& visited,vector<int> adj[]) {
         visited[u] = true;
-
         for (auto &v : adj[u]) {
-
             if (v == parent) continue;
-
             if (!visited[v]) {
                 depth[v] = depth[u] + 1;
                 dfs(v, u, depth, visited, adj);
@@ -132,28 +123,24 @@ public:
     }
 
     int longestCycle(int V, vector<vector<int>>& edges) {
-
         vector<int> adj[V];
-
         for (auto &edge : edges) {
           int u=edge[0];
           int v=edge[1];
             adj[u].push_back(v);
             adj[v].push_back(u);
         }
-
         vector<bool> visited(V, false);
         vector<int> depth(V, 0);
-
         for (int i = 0; i < V; i++) {
             if (!visited[i]) {
                 dfs(i, -1, depth, visited, adj);
             }
         }
-
         return maxLen;
     }
 };
+
 
 // ✅ 3️⃣ BFS + unordered_map (Your Style)
 class Solution {
@@ -203,6 +190,7 @@ public:
         return maxLen;
     }
 };
+
 
 // ✅ 4️⃣ DFS + unordered_map
 class Solution {

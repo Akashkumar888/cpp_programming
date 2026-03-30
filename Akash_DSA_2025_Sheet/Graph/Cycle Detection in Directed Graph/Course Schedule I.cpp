@@ -75,3 +75,40 @@ class Solution {
         return true;
     }
 };
+
+
+class Solution {
+  public:
+    bool canFinish(int n, vector<vector<int>>& prerequisites) {
+        // Code here
+        // bfs , topoLogical Sorting 
+        // Kahn's Algorithm
+        vector<int>indegree(n,0);
+        vector<int>adj[n];
+        for(auto &edge:prerequisites){
+            int u=edge[0];
+            int v=edge[1];
+            adj[v].push_back(u);
+            indegree[u]++;
+            //indicates that we need to take course v first if we want to take course u.
+        }
+        queue<int>q;
+        for(int i=0;i<n;i++){
+            if(indegree[i]==0)q.push(i);
+        }
+        // remove uncyclic nodes from graph
+        // 👉 Topological sorting is only possible in Directed Acyclic Graph (DAG)
+        // 👉 If a cycle exists → some nodes will never reach indegree 0
+        int count=0;
+        while(!q.empty()){
+            int node=q.front();
+            q.pop();
+            count++;
+            for(auto &ngbr:adj[node]){
+                indegree[ngbr]--;
+                if(indegree[ngbr]==0)q.push(ngbr);
+            }
+        }
+        return count==n;
+    }
+};

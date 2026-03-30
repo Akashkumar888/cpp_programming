@@ -108,3 +108,131 @@ class Solution {
         return prev[sum];
     }
 };
+
+// We are given:
+// s1 - s2 = diff
+// s1 + s2 = totalSum
+// 🔥 Solve Equations
+// Add both:
+// 2*s1 = totalSum + diff
+// s1 = (totalSum + diff) / 2
+// OR subtract:
+// 2*s2 = totalSum - diff
+// s2 = (totalSum - diff) / 2
+// ❓ So which one to use?
+// 👉 You can use either s1 OR s2
+// But in coding:
+// We usually use s2 = (totalSum - diff) / 2
+// 💡 Why prefer s2?
+// Because:
+// Subset sum problem → find subset with given sum
+// 👉 Smaller target is better
+// s2 ≤ s1 always
+// So:
+// Use s2 → less DP states → efficient
+// ⚠️ Important Condition
+// if ((totalSum - diff) < 0 || (totalSum - diff) % 2 != 0)return 0;
+// 👉 Otherwise no solution
+
+class Solution {
+  public:
+  // top-down code
+  int solve(int i,vector<int>&arr,int tr,vector<vector<int>>&dp){
+      if(i==0){
+          if(tr== 0 && arr[0]==0)return 2;
+          if(tr==0 || tr==arr[0])return 1;
+          return 0;
+      }
+      if(dp[i][tr]!=-1)return dp[i][tr];
+      int pick=0;
+      int notpick=solve(i-1,arr,tr,dp);
+      if(arr[i]<=tr)pick=solve(i-1,arr,tr-arr[i],dp);
+      return dp[i][tr]=pick+notpick;
+  }
+    int countPartitions(vector<int>& arr, int diff) {
+        // Code here
+        int n=arr.size();
+        int totalSum=0;
+        for(int &num:arr)totalSum+=num;
+        // s1-s2=diff
+        // s1+s2=totalSum
+        // totalSum-s2-s2=diff
+        // s2=(totalSum-diff)/2
+        if((totalSum-diff)<0 || (totalSum-diff)%2!=0)return 0;
+        int s2=(totalSum-diff)/2;
+        vector<vector<int>>dp(n,vector<int>(s2+1,-1));
+        return solve(n-1,arr,s2,dp);
+    }
+};
+
+
+class Solution {
+  public:
+  // bottom-up code
+    int countPartitions(vector<int>& arr, int diff) {
+        // Code here
+        int n=arr.size();
+        int totalSum=0;
+        for(int &num:arr)totalSum+=num;
+        // s1-s2=diff
+        // s1+s2=totalSum
+        // totalSum-s2-s2=diff
+        // s2=(totalSum-diff)/2
+        if((totalSum-diff)<0 || (totalSum-diff)%2!=0)return 0;
+        int s2=(totalSum-diff)/2;
+        vector<vector<int>>dp(n,vector<int>(s2+1,0));
+        
+        // base case
+        for(int tr=0;tr<=s2;tr++){
+            if(tr == 0 && arr[0] == 0)dp[0][tr]=2;   
+            else if(tr==0 || arr[0]==tr)dp[0][tr]=1;
+            else dp[0][tr]=0;
+        }
+        for(int i=1;i<n;i++){
+            for(int tr=0;tr<=s2;tr++){
+                int pick=0;
+                int notpick=dp[i-1][tr];
+                if(arr[i]<=tr)pick=dp[i-1][tr-arr[i]];
+                dp[i][tr]=pick+notpick;
+            }
+        }
+        return dp[n-1][s2];
+    }
+};
+
+
+
+class Solution {
+  public:
+  // bottom-up code space optimised
+    int countPartitions(vector<int>& arr, int diff) {
+        // Code here
+        int n=arr.size();
+        int totalSum=0;
+        for(int &num:arr)totalSum+=num;
+        // s1-s2=diff
+        // s1+s2=totalSum
+        // totalSum-s2-s2=diff
+        // s2=(totalSum-diff)/2
+        if((totalSum-diff)<0 || (totalSum-diff)%2!=0)return 0;
+        int s2=(totalSum-diff)/2;
+        vector<int>prev(s2+1,0);
+        vector<int>curr(s2+1,0);
+        // base case
+        for(int tr=0;tr<=s2;tr++){
+            if(tr == 0 && arr[0] == 0)prev[tr]=2;   
+            else if(tr==0 || arr[0]==tr)prev[tr]=1;
+            else prev[tr]=0;
+        }
+        for(int i=1;i<n;i++){
+            for(int tr=0;tr<=s2;tr++){
+                int pick=0;
+                int notpick=prev[tr];
+                if(arr[i]<=tr)pick=prev[tr-arr[i]];
+                curr[tr]=pick+notpick;
+            }
+            prev=curr;
+        }
+        return prev[s2];
+    }
+};

@@ -1,3 +1,80 @@
+// 🔍 4. HOW TO IDENTIFY IN QUESTION
+// ✅ Case 1: Unweighted Graph
+// 👉 Example:
+// "There is an edge between u and v"
+// edges[i] = [u, v]
+// 👉 Use:
+// vector<int> adj[V];
+// ✅ Case 2: Weighted Graph
+// 👉 Example:
+// "Edge between u and v takes time t"
+// edges[i] = [u, v, t]
+// 👉 Use:
+// vector<vector<pair<int,int>>> adj;
+// ⚡ 5. INTERVIEW TRICK (VERY IMPORTANT)
+// 👉 If question says:
+// Shortest path → weighted → use pair
+// BFS / DFS only traversal → unweighted → use int
+// 🧠 6. REAL EXAMPLES
+// 🔹 BFS Problem (Unweighted)
+// 👉 Minimum steps:
+// vector<int> adj[V];
+// ✔ Because all edges = equal cost
+// 🔹 Dijkstra Problem (Weighted)
+// 👉 Minimum time/distance:
+// vector<vector<pair<int,int>>> adj;
+// ✔ Because weights differ
+// 🔥 7. ADVANCED TIP (INTERVIEW GOLD)
+// 👉 Even if graph is unweighted, you can still use:
+// vector<vector<pair<int,int>>> adj;
+// with weight = 1
+// BUT ❗
+// 👉 Not recommended (extra memory + complexity)
+
+class Solution {
+  public:
+  // 2D array edges[][], where edges[i] = [ui, vi, timei] means that there is an undirected edge between nodes ui and vi that takes timei minutes to reach.
+// Your task is to return in how many ways you can travel from node 0 to node V - 1 in the shortest amount of time.
+    int countPaths(int V, vector<vector<int>>& edges) {
+        // code here
+        typedef pair<int,int>P;
+        // ✅ Correct adjacency list
+        vector<vector<P>> adj(V);
+        for(auto &edge:edges){
+            int u=edge[0];
+            int v=edge[1];
+            int t=edge[2];
+            adj[u].push_back({v,t});
+            adj[v].push_back({u,t});
+        }
+        vector<int>dist(V,INT_MAX);
+        vector<int>ways(V,0);
+        int src=0,dest=V-1;
+        priority_queue<P,vector<P>,greater<P>>pq;
+        dist[src]=0;// here src 0
+        ways[src]=1;// 0 src and 0 time
+        pq.push({0,src});
+        while(!pq.empty()){
+            int time=pq.top().first;
+            int node=pq.top().second;
+            pq.pop();
+            for(auto &ngbr:adj[node]){
+                int adjNode=ngbr.first;
+                int wt=ngbr.second;
+                if(time+wt<dist[adjNode]){
+                    dist[adjNode]=time+wt;
+                    pq.push({time+wt,adjNode});
+                    ways[adjNode]=ways[node];
+                }// dijikstra algorithm slight change
+                else if(time + wt==dist[adjNode]){
+                    ways[adjNode]=(ways[adjNode]+ways[node]);
+                }
+            }
+        }
+        return ways[dest];
+    }
+};
+
 
 class Solution {
   public:
