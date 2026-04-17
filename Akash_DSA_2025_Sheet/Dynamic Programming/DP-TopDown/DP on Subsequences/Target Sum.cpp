@@ -151,3 +151,112 @@ public:
         return prev[sum];
     }
 };
+
+
+class Solution {
+  public:// Top - Down approach code
+  int solve(int i,vector<int>&arr,int tr,vector<vector<int>>&dp){
+      if(i==0){ 
+            if(tr == 0 && arr[0] == 0)return 2;  
+            else if(tr == 0 || arr[0]==tr)return 1;             
+            return 0;
+      }
+      if(dp[i][tr]!=-1)return dp[i][tr];
+      int pick=0;
+      int notpick=solve(i-1,arr,tr,dp);
+      if(arr[i]<=tr)pick=solve(i-1,arr,tr-arr[i],dp);
+      return dp[i][tr]=pick + notpick;
+  }
+    int totalWays(vector<int>& arr, int target) {
+        //  code here
+        // s1 assign->  +(s1)
+        // s2 assign -> -(s2)
+        // s1-s2=target
+        // s1>=s2
+        // s1-s2=target; equations 1
+        // s1=totalSum-s2; put this value in equations 1
+        // totalSum-s2-s2=target;
+        // s2=(totalSum-target)/2;
+        // it should be +ve and even also 
+        int n=arr.size();
+        int totalSum=accumulate(arr.begin(),arr.end(),0);
+        if((totalSum-target)<0 || (totalSum-target)%2)return 0;// if totalSum is odd 
+        int sum=(totalSum-target)/2;
+        vector<vector<int>>dp(n,vector<int>(sum+1,-1));
+        return solve(n-1,arr,sum,dp);
+    }
+};
+
+class Solution {
+  public:// Bottom - Up approach code
+    int totalWays(vector<int>& arr, int target) {
+        //  code here
+        // s1 assign->  +(s1)
+        // s2 assign -> -(s2)
+        // s1-s2=target
+        // s1>=s2
+        // s1-s2=target; equations 1
+        // s1=totalSum-s2; put this value in equations 1
+        // totalSum-s2-s2=target;
+        // s2=(totalSum-target)/2;
+        // it should be +ve and even also 
+        int n=arr.size();
+        int totalSum=accumulate(arr.begin(),arr.end(),0);
+        if((totalSum-target)<0 || (totalSum-target)%2)return 0;// if totalSum is odd 
+        int sum=(totalSum-target)/2;
+        vector<vector<int>>dp(n,vector<int>(sum+1,0));
+        // base case
+        for(int tr=0;tr<=sum;tr++){
+            if(tr == 0 && arr[0] == 0)dp[0][tr]=2;   
+            else if(tr==0 || arr[0]==tr)dp[0][tr]=1;
+            else dp[0][tr]=0;
+        }
+        for(int i=1;i<n;i++){
+            for(int tr=0;tr<=sum;tr++){
+                int pick=0;
+                int notpick=dp[i-1][tr];
+                if(arr[i]<=tr)pick=dp[i-1][tr-arr[i]];
+                dp[i][tr]=pick+notpick;
+            }
+        }
+        return dp[n-1][sum];
+    }
+};
+
+class Solution {
+  public:// Bottom - Up space optimised code
+    int totalWays(vector<int>& arr, int target) {
+        //  code here
+        // s1 assign->  +(s1)
+        // s2 assign -> -(s2)
+        // s1-s2=target
+        // s1>=s2
+        // s1-s2=target; equations 1
+        // s1=totalSum-s2; put this value in equations 1
+        // totalSum-s2-s2=target;
+        // s2=(totalSum-target)/2;
+        // it should be +ve and even also 
+        int n=arr.size();
+        int totalSum=accumulate(arr.begin(),arr.end(),0);
+        if((totalSum-target)<0 || (totalSum-target)%2)return 0;// if totalSum is odd 
+        int sum=(totalSum-target)/2;
+        vector<int>prev(sum+1,0);
+        vector<int>curr(sum+1,0);
+        // base case
+        for(int tr=0;tr<=sum;tr++){
+            if(tr == 0 && arr[0] == 0)prev[tr]=2;   
+            else if(tr==0 || arr[0]==tr)prev[tr]=1;
+            else prev[tr]=0;
+        }
+        for(int i=1;i<n;i++){
+            for(int tr=0;tr<=sum;tr++){
+                int pick=0;
+                int notpick=prev[tr];
+                if(arr[i]<=tr)pick=prev[tr-arr[i]];
+                curr[tr]=pick+notpick;
+            }
+            prev=curr;
+        }
+        return prev[sum];
+    }
+};
