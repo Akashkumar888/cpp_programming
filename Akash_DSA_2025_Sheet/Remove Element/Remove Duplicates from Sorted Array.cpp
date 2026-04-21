@@ -1,3 +1,23 @@
+class Solution {
+public:
+    int removeDuplicates(vector<int>& nums) {
+        int n = nums.size();
+        if (n <= 1) return n;
+
+        int j = 0;   // slow pointer
+        
+
+        for (int i=1; i < n; i++) {
+            if (nums[j] != nums[i]) {
+                j++;
+                nums[j] = nums[i];
+            }
+        }
+
+        return j + 1; // number of unique elements
+    }
+};
+
 
 class Solution {
 public:

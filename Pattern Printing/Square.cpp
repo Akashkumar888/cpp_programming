@@ -17,6 +17,13 @@ int main() {
     return 0;
 }
 
+
+1 1 1 1 1
+1 1 1 1 1
+1 1 1 1 1
+1 1 1 1 1
+1 1 1 1 1
+
 // Row-wise Same Number Square
 #include <bits/stdc++.h>
 using namespace std;
@@ -33,6 +40,12 @@ int main() {
     }
     return 0;
 }
+
+1 1 1 1 1
+2 2 2 2 2
+3 3 3 3 3
+4 4 4 4 4
+5 5 5 5 5
 
 
 // Column-wise Increasing Square
@@ -52,6 +65,11 @@ int main() {
     return 0;
 }
 
+1 1 1 1 1
+2 2 2 2 2
+3 3 3 3 3
+4 4 4 4 4
+5 5 5 5 5
 
 
 // Continuous Number Square
@@ -74,6 +92,12 @@ int main() {
 }
 
 
+1  2  3  4  5
+6  7  8  9  10
+11 12 13 14 15
+16 17 18 19 20
+21 22 23 24 25
+
 // Reverse Column Square
 #include <bits/stdc++.h>
 using namespace std;
@@ -90,6 +114,13 @@ int main() {
     }
     return 0;
 }
+
+5 4 3 2 1
+5 4 3 2 1
+5 4 3 2 1
+5 4 3 2 1
+5 4 3 2 1
+
 
 
 // Reverse Row Square
@@ -109,6 +140,12 @@ int main() {
     return 0;
 }
 
+5 5 5 5 5
+4 4 4 4 4
+3 3 3 3 3
+2 2 2 2 2
+1 1 1 1 1
+
 
 // Border Square
 #include <bits/stdc++.h>
@@ -126,6 +163,12 @@ int main() {
     }
     return 0;
 }
+
+1 1 1 1 1
+1       1
+1       1
+1       1
+1 1 1 1 1
 
 
 // Diagonal Square
@@ -147,3 +190,17 @@ int main() {
 }
 
 
+1       1
+ 1     1 
+   1 1   
+ 1     1 
+1       1
+
+// 🔥 TCS Interview Tip
+// They often ask:
+
+// 👉 “What will be output of this code?”
+// Example:
+// cout << n - j + 1;
+// 👉 You should instantly say:
+// “Reverse column pattern”
