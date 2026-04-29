@@ -7,7 +7,6 @@ class Solution {
         unordered_map<char,int>mp;
         int i=0,j=0;
         int maxLen=-1;
-        int uniqueChar=0;
         while(j<n){
             mp[s[j]]++;// phir bada do char frequency
             while(mp.size()>k){
