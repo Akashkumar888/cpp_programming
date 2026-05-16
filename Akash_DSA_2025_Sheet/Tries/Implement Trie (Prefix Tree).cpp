@@ -29,7 +29,7 @@ public:
         root=new TrieNode(); // contructor which is called when object is created.
     }
     
-    void insert(string word) {
+    void insert(string &word) {
         TrieNode*crawler=root;
         for(char &ch:word){
             int idx=ch-'a';
@@ -42,7 +42,7 @@ public:
         crawler->isendof=true;
     }
     
-    bool search(string word) {
+    bool search(string &word) {
         TrieNode*crawler=root;
         for(char &ch:word){
             int idx=ch-'a';

@@ -37,7 +37,7 @@ class Solution {
           inMst[node]=true;
           sum+=d;
           for(auto &it:adj[node]){
-              int adjNode=it.first; // grpah kaise bana hai vaha se access krte hai
+              int adjNode=it.first; // graph kaise bana hai vaha se access krte hai
               int wt=it.second;
               if(!inMst[adjNode]){
                   pq.push({wt,adjNode});
