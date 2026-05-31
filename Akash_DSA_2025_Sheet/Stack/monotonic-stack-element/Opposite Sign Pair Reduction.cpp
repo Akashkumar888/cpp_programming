@@ -13,6 +13,8 @@ class Solution {
         for (int i = 1; i < n; i++) {
             int curr = arr[i];
             bool removed = false;
+            // if two number are have opposite sign then their value always less than 0
+            // if two number are have same sign then their value always greater than 0
             while (!st.empty() && st.top() * curr < 0) {
                 int top = st.top();
 
