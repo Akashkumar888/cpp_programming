@@ -96,7 +96,7 @@ using namespace std;
 
         // Lower part (fix here)
         space = 1;
-        for(int i = n - 2; i >= 0; i--) {
+        for(int i = n - 2; i >= 0; i--) { // full diamond i=n-2 half lower part of diamond i = n-1
 
             for(int j = 0; j < space; j++) {
                 cout << " ";
