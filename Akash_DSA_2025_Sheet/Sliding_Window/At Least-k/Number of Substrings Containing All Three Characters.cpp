@@ -44,3 +44,30 @@ public:
         return count;
     }
 };
+
+class Solution {
+public:
+int isPossible(vector<int>&mp){
+    int count=0;
+    for(int i=0;i<3;i++){
+        if(mp[i]!=0)count++;
+    }
+    return count;
+}
+    int numberOfSubstrings(string s) {
+        int n=s.size();
+        int i=0,j=0;
+        vector<int>mp(3,0);
+        int count=0;
+        while(j<n){
+            mp[s[j]-'a']++;
+            while(isPossible(mp)==3){
+                count+=(n-j);
+                if(mp[s[i]-'a']>0)mp[s[i]-'a']--;
+                i++;
+            }
+            j++;
+        }
+        return count;
+    }
+};
