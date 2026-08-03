@@ -20,7 +20,7 @@ public:
         int bestEnd = 0;
 
         for (int i = 0; i < n; i++) {
-            if (sum == 0) start = i;   // potential start
+            if (sum == 0) start = i;   // potential start 
             sum += nums[i];
 
             if (sum > maxSum) {
