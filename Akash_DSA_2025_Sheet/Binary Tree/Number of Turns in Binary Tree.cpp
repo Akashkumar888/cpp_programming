@@ -88,3 +88,71 @@ class Solution {
         return 1 + solve(first, lca) + solve(second, lca);
     }
 };
+
+
+class Solution {
+  public:
+    bool solve(Node* root, int val, string &path) {
+        if (root == NULL) return false;
+
+        if (root->data == val)return true;
+        
+        // Try left
+        path.push_back('L');
+        if (solve(root->left, val, path)) return true;
+        
+        path.pop_back();
+
+        // Try right
+        path.push_back('R');
+
+        if (solve(root->right, val, path)) return true;
+        
+        path.pop_back();
+        return false;
+    }
+    int numberOfTurns(Node* root, int p, int q) {
+
+        string pathP = "";
+        string pathQ = "";
+
+        // Find root -> p path
+        solve(root, p, pathP);
+
+        // Find root -> q path
+        solve(root, q, pathQ);
+
+        // Find common path
+        int i = 0;
+        while (i < pathP.size() && i < pathQ.size() && pathP[i] == pathQ[i]) {
+            i++;
+        }
+
+        // Build path from p -> q
+        string path = "";
+
+        // p -> LCA
+        for (int j = pathP.size() - 1; j >= i; j--) {
+            path += pathP[j];
+        }
+
+        // LCA -> q
+        for (int j = i; j < pathQ.size(); j++) {
+            path += pathQ[j];
+        }
+
+        // If both nodes lie on the same straight path
+        if (path.size() <= 1) {
+            return -1;
+        }
+
+        // Count turns
+        int count = 0;
+        for (int j = 1; j < path.size(); j++) {
+            if (path[j] != path[j - 1]) {
+                count++;
+            }
+        }
+        return count == 0 ? -1 : count;
+    }
+};
